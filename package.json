@@ -8,5 +8,9 @@
   },
   "author": "xz64",
   "license": "ISC",
-  "private": true
+  "private": true,
+  "devDependencies": {
+    "gulp": "^3.9.0",
+    "webpack": "^1.12.9"
+  }
 }
