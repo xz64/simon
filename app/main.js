@@ -1,2 +1,2 @@
 console.log(PIXI)
-document.write('Hello');
+document.write('Hello')

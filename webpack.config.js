@@ -17,6 +17,16 @@ module.exports = {
   module: {
     noParse: [
       path.join(__dirname, 'node_modules', 'pixi.js')
+    ],
+    loaders: [
+      {
+        test: /\.js$/,
+        exclude: /node_modules/,
+        loader: 'babel-loader',
+        query: {
+          presets: ['es2015']
+        }
+      }
     ]
   },
   resolve: {
