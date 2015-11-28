@@ -17,7 +17,6 @@ gulp.task('webpack', function(callback) {
   })
 })
 
-
 gulp.task('webpack-dev-server', function(callback) {
   new webpackDevServer(webpack(webpackConfig), {
     contentBase: webpackConfig.output.path,
