@@ -17,5 +17,9 @@
     "pixi.js": "^3.0.8",
     "webpack": "^1.12.9",
     "webpack-dev-server": "^1.14.0"
+  },
+  "scripts": {
+    "gulp": "gulp",
+    "webpack": "webpack"
   }
 }
