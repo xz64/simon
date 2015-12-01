@@ -9,7 +9,7 @@
     "faucet": "faucet",
     "babel-node": "babel-node",
     "babel-tape-runner": "babel-tape-runner",
-    "test": "babel-tape-runner \"test/**/*.js\""
+    "test": "gulp test"
   },
   "author": "xz64",
   "license": "ISC",
