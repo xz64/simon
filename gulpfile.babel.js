@@ -1,4 +1,6 @@
 var gulp = require('gulp')
+var tape = require('gulp-tape')
+var tapColorize = require('tap-colorize')
 var webpack = require('webpack')
 var webpackDevServer = require('webpack-dev-server')
 var webpackConfig = require('./webpack.config.js')
@@ -28,6 +30,13 @@ gulp.task('webpack-dev-server', function(callback) {
       console.log('ERROR', err);
     }
   })
+})
+
+gulp.task('test', function() {
+  return gulp.src('test/**/*.js')
+    .pipe(tape({
+      reporter: tapColorize()
+    }))
 })
 
 gulp.task('watch', function() {
