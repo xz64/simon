@@ -42,7 +42,11 @@
     },
     "ecmaFeatures": {
       "modules": true,
-      "arrowFunctions": true
+      "arrowFunctions": true,
+      "classes": true
+    },
+    "env": {
+      "es6": true
     }
   }
 }
