@@ -1,5 +1,6 @@
 var gulp = require('gulp')
 var tape = require('gulp-tape')
+var eslint = require('gulp-eslint')
 var tapColorize = require('tap-colorize')
 var webpack = require('webpack')
 var webpackDevServer = require('webpack-dev-server')
@@ -37,6 +38,12 @@ gulp.task('test', function() {
     .pipe(tape({
       reporter: tapColorize()
     }))
+})
+
+gulp.task('lint', function() {
+  gulp.src(['app/**/*.js', 'test/**/*.js'])
+    .pipe(eslint())
+    .pipe(eslint.format())
 })
 
 gulp.task('watch', function() {
