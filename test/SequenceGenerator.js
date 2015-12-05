@@ -1,10 +1,10 @@
 import test from 'tape';
-import sequenceGenerator from '../app/sequenceGenerator';
+import SequenceGenerator from '../app/SequenceGenerator';
 
 /* Test length of returned sequence */
 function testLength(length) {
   return (assert) => {
-    let sequence = sequenceGenerator.generateSequence(length);
+    let sequence = SequenceGenerator.generateSequence(length);
     assert.equal(sequence.length, length);
     assert.end();
   };
@@ -25,7 +25,7 @@ function inRange(x) {
 
 function testItems(length) {
   return (assert) => {
-    let sequence = sequenceGenerator.generateSequence(length);
+    let sequence = SequenceGenerator.generateSequence(length);
     let i;
     for(i = 0; i < sequence.length; i++) {
       assert.assert(inRange(sequence[i]));
