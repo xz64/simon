@@ -1,4 +1,9 @@
 export default class {
+  /* functions that need to be implemented */
+  createGraphics() {}
+  createSprite() {}
+  createInteractivity() {}
+
   constructor(width, height) {
     this.width = width;
     this.height = height;
