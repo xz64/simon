@@ -1,16 +1,21 @@
 import Button from './Button';
+import Audio from './Audio';
 
 export default class extends Button {
-  constructor(width, height, quadrant) {
+  constructor(width, height, quadrant, audio) {
     super(width, height);
     this.smallRadius = this.boardSize / 5;
     this.bigRadius = this.boardSize / 2.5;
+    this.buttonSpacing = 30;
+    this.quadrant = quadrant;
+    this.dim();
+    this.audio = new Audio(audio);
   }
 
   createGraphics() {
     var graphics = new PIXI.Graphics();
-    var angles = getAngles(quadrant);
-    var connectorLines = getConnectorLines(quadrant);
+    var angles = getAngles(this.quadrant);
+    var connectorLines = getConnectorLines(this.quadrant);
 
     graphics.beginFill(color);
     graphics.lineStyle(1, color, 1);
@@ -23,8 +28,48 @@ export default class extends Button {
     return graphics;
   }
 
-  createSprite() {}
-  createInteractivity() {}
+  createSprite() {
+    let mySprite = new PIXI.Sprite(this.graphics.generateTexture());
+
+    mySprite.x = 0;
+    mySprite.y = 0;
+    mySprite.hitArea = getHitPolygon(this.quadrant);
+    mySprite.tint = 0x777777;
+
+    return mySprite;
+  }
+
+  registerEventHandlers() {
+    this.sprite.mousedown = onMouseDown;
+    this.sprite.mouseup = onMouseUp;
+    this.sprite.mouesup = onMouseUp;
+  }
+
+  dim() {
+    this.sprite.tint = 0x777777;
+  }
+
+  light() {
+    this.sprite.tint = 0xFFFFFF;
+  }
+
+  playAudio() {
+    audio.play();
+  }
+
+  pauseAudio() {
+    audio.pause();
+  }
+
+  onMouseDown() {
+    light();
+    playAudio();
+  }
+
+  onMouseUp() {
+    dim();
+    pauseAudio();
+  }
 
   static getAngles(quadrant) {
     res = [0, 0];
@@ -130,6 +175,28 @@ export default class extends Button {
         new PIXI.Point(bigRadius*Math.cos(3*Math.PI/8),
           bigRadius*Math.sin(3*Math.PI/8))
       ]);
+      break;
+    }
+    return res;
+  }
+
+  static getXY(quadrant) {
+    let res = null;
+    switch(quadrant) {
+    case 1:
+      res = {x: width/2 + buttonSpacing,
+        y: height/2 - bigRadius - buttonSpacing};
+      break;
+    case 2:
+      res = {x: width/2 - bigRadius - buttonSpacing,
+        y: height/2 - bigRadius - buttonSpacing};
+      break;
+    case 3:
+      res = {x: width/2 - bigRadius - buttonSpacing,
+        y: height/2 + buttonSpacing};
+      break;
+    case 4:
+      res = {x: width/2 + buttonSpacing, y: height/2 + buttonSpacing};
       break;
     }
     return res;
