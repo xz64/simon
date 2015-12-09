@@ -1,5 +1,5 @@
 export default class {
-  constructor(width, height) {
+  constructor() {
     this.observers = [];
   }
 
