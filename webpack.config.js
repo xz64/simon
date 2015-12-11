@@ -4,7 +4,7 @@ var outputDir = 'dist'
 
 module.exports = {
   entry: {
-    vendor: ['pixi.js'],
+    vendor: ['pixi.js', 'jquery'],
     app: path.join(__dirname, 'app', 'main.js')
   },
   output: {
@@ -12,7 +12,10 @@ module.exports = {
     filename: 'app.js'
   },
   plugins: [
-    new webpack.optimize.CommonsChunkPlugin('vendor', 'vendor.js')
+    new webpack.optimize.CommonsChunkPlugin('vendor', 'vendor.js'),
+    new webpack.ProvidePlugin({
+      $: 'jquery'
+    })
   ],
   module: {
     noParse: [
@@ -32,7 +35,10 @@ module.exports = {
   resolve: {
     alias: {
       'pixi.js': path.join(__dirname, 'node_modules', 'pixi.js', 'bin',
-        'pixi.min.js')
+        'pixi.min.js'),
+      'jquery': path.join(__dirname, 'node_modules', 'jquery', 'dist',
+        'jquery.min.js')
     }
-  }
+  },
+  devtool: '#source-map'
 }
