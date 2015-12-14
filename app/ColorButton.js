@@ -1,27 +1,34 @@
-import Button from './Button';
 import Audio from './Audio';
+import Observable from './Observable.js';
 
-export default class extends Button {
+export default class ColorButton extends Observable {
   constructor(width, height, quadrant, audio) {
-    super(width, height);
+    super();
+    this.width = width;
+    this.height = height;
+    this.boardSize = ( (width  < height) ? width : height ) - 30;
     this.smallRadius = this.boardSize / 5;
     this.bigRadius = this.boardSize / 2.5;
     this.buttonSpacing = 30;
     this.quadrant = quadrant;
+    this.graphics = this.createGraphics();
+    this.sprite = this.createSprite();
+    this.registerEventHandlers();
     this.dim();
     this.audio = new Audio(audio);
   }
 
   createGraphics() {
     var graphics = new PIXI.Graphics();
-    var angles = getAngles(this.quadrant);
-    var connectorLines = getConnectorLines(this.quadrant);
+    var angles = ColorButton.getAngles(this.quadrant);
+    var connectorLines = ColorButton.getConnectorLines(this.quadrant);
+    var color = ColorButton.getColor(this.quadrant);
 
     graphics.beginFill(color);
     graphics.lineStyle(1, color, 1);
-    graphics.arc(0, 0, bigRadius, angles[0], angles[1]);
+    graphics.arc(0, 0, this.bigRadius, angles[0], angles[1]);
     graphics.moveTo(connectorLines[0], connectorLines[1]);
-    graphics.arc(0, 0, smallRadius, angles[0], angles[1]);
+    graphics.arc(0, 0, this.smallRadius, angles[0], angles[1]);
     graphics.lineTo(connectorLines[2], connectorLines[3]);
     graphics.endFill();
     
@@ -30,19 +37,21 @@ export default class extends Button {
 
   createSprite() {
     let mySprite = new PIXI.Sprite(this.graphics.generateTexture());
+    let coords = ColorButton.getXY.call(this, this.quadrant);
 
-    mySprite.x = 0;
-    mySprite.y = 0;
-    mySprite.hitArea = getHitPolygon(this.quadrant);
+    console.log(coords);
+    mySprite.x = coords.x;
+    mySprite.y = coords.y;
+    mySprite.hitArea = ColorButton.getHitPolygon(this.quadrant);
     mySprite.tint = 0x777777;
 
     return mySprite;
   }
 
   registerEventHandlers() {
-    this.sprite.mousedown = onMouseDown;
-    this.sprite.mouseup = onMouseUp;
-    this.sprite.mouesup = onMouseUp;
+    this.sprite.mousedown = this.onMouseDown;
+    this.sprite.mouseup = this.onMouseUp;
+    this.sprite.mouseout = this.onMouseUp;
   }
 
   dim() {
@@ -72,7 +81,7 @@ export default class extends Button {
   }
 
   static getAngles(quadrant) {
-    res = [0, 0];
+    let res = [0, 0];
     switch(quadrant) {
     case 1:
       res = [-Math.PI/2, 0];
@@ -91,89 +100,89 @@ export default class extends Button {
   }
 
   static getConnectorLines(quadrant) {
-    res = [0,0,0,0];
+    let res = [0,0,0,0];
     switch(quadrant) {
     case 1:
-      res = [0, -bigRadius, bigRadius, 0];
+      res = [0, -this.bigRadius, this.bigRadius, 0];
       break;
     case 2:
-      res = [-bigRadius, 0, 0, -bigRadius];
+      res = [-this.bigRadius, 0, 0, -this.bigRadius];
       break;
     case 3:
-      res = [0, bigRadius, -bigRadius, 0];
+      res = [0, this.bigRadius, -this.bigRadius, 0];
       break;
     case 4:
-      res = [bigRadius, 0, 0, bigRadius];
+      res = [this.bigRadius, 0, 0, this.bigRadius];
       break;
     }    
     return res;
   }
 
   static getHitPolygon(quadrant) {
-    res = null;
+    let res = null;
     switch(quadrant) {
     case 1:
       res = new PIXI.Polygon([
         new PIXI.Point(0,0),
-        new PIXI.Point(bigRadius*Math.cos(3*Math.PI/8),
-          bigRadius-bigRadius*Math.sin(3*Math.PI/8)),
-        new PIXI.Point(bigRadius*Math.cos(2*Math.PI/8),
-          bigRadius-bigRadius*Math.sin(2*Math.PI/8)),
-        new PIXI.Point(bigRadius*Math.cos(1*Math.PI/8),
-          bigRadius-bigRadius*Math.sin(1*Math.PI/8)),
-        new PIXI.Point(bigRadius, bigRadius),
-        new PIXI.Point(smallRadius, bigRadius),
-        new PIXI.Point(smallRadius*Math.cos(Math.PI/4),
-          bigRadius-smallRadius*Math.sin(Math.PI/4)),
-        new PIXI.Point(0, smallRadius)
+        new PIXI.Point(this.bigRadius*Math.cos(3*Math.PI/8),
+          this.bigRadius-this.bigRadius*Math.sin(3*Math.PI/8)),
+        new PIXI.Point(this.bigRadius*Math.cos(2*Math.PI/8),
+          this.bigRadius-this.bigRadius*Math.sin(2*Math.PI/8)),
+        new PIXI.Point(this.bigRadius*Math.cos(1*Math.PI/8),
+          this.bigRadius-this.bigRadius*Math.sin(1*Math.PI/8)),
+        new PIXI.Point(this.bigRadius, this.bigRadius),
+        new PIXI.Point(this.smallRadius, this.bigRadius),
+        new PIXI.Point(this.smallRadius*Math.cos(Math.PI/4),
+          this.bigRadius-this.smallRadius*Math.sin(Math.PI/4)),
+        new PIXI.Point(0, this.smallRadius)
       ]);
       break;
     case 2:
       res = new PIXI.Polygon([
-        new PIXI.Point(0,bigRadius),
-        new PIXI.Point(smallRadius, bigRadius),
-        new PIXI.Point(bigRadius-smallRadius*Math.cos(Math.PI/4),
-          bigRadius-smallRadius*Math.sin(Math.PI/4)),
-        new PIXI.Point(bigRadius, smallRadius),
-        new PIXI.Point(bigRadius, 0),
-        new PIXI.Point(bigRadius-bigRadius*Math.cos(3*Math.PI/8),
-          bigRadius-bigRadius*Math.sin(3*Math.PI/8)),
-        new PIXI.Point(bigRadius-bigRadius*Math.cos(2*Math.PI/8),
-          bigRadius-bigRadius*Math.sin(2*Math.PI/8)),
-        new PIXI.Point(bigRadius-bigRadius*Math.cos(1*Math.PI/8),
-          bigRadius-bigRadius*Math.sin(1*Math.PI/8))
+        new PIXI.Point(0,this.bigRadius),
+        new PIXI.Point(this.smallRadius, this.bigRadius),
+        new PIXI.Point(this.bigRadius-this.smallRadius*Math.cos(Math.PI/4),
+          this.bigRadius-this.smallRadius*Math.sin(Math.PI/4)),
+        new PIXI.Point(this.bigRadius, this.smallRadius),
+        new PIXI.Point(this.bigRadius, 0),
+        new PIXI.Point(this.bigRadius-this.bigRadius*Math.cos(3*Math.PI/8),
+          this.bigRadius-this.bigRadius*Math.sin(3*Math.PI/8)),
+        new PIXI.Point(this.bigRadius-this.bigRadius*Math.cos(2*Math.PI/8),
+          this.bigRadius-this.bigRadius*Math.sin(2*Math.PI/8)),
+        new PIXI.Point(this.bigRadius-this.bigRadius*Math.cos(1*Math.PI/8),
+          this.bigRadius-this.bigRadius*Math.sin(1*Math.PI/8))
       ]);
       break;
     case 3:
       res = new PIXI.Polygon([
         new PIXI.Point(0,0),
-        new PIXI.Point(smallRadius, 0),
-        new PIXI.Point(bigRadius-smallRadius*Math.cos(Math.PI/4),
-          smallRadius*Math.sin(Math.PI/4)),
-        new PIXI.Point(bigRadius, smallRadius),
-        new PIXI.Point(bigRadius, bigRadius),
-        new PIXI.Point(bigRadius-bigRadius*Math.cos(3*Math.PI/8),
-          bigRadius*Math.sin(3*Math.PI/8)),
-        new PIXI.Point(bigRadius-bigRadius*Math.cos(2*Math.PI/8),
-          bigRadius*Math.sin(2*Math.PI/8)),
-        new PIXI.Point(bigRadius-bigRadius*Math.cos(1*Math.PI/8),
-          bigRadius*Math.sin(1*Math.PI/8))
+        new PIXI.Point(this.smallRadius, 0),
+        new PIXI.Point(this.bigRadius-this.smallRadius*Math.cos(Math.PI/4),
+          this.smallRadius*Math.sin(Math.PI/4)),
+        new PIXI.Point(this.bigRadius, this.smallRadius),
+        new PIXI.Point(this.bigRadius, this.bigRadius),
+        new PIXI.Point(this.bigRadius-this.bigRadius*Math.cos(3*Math.PI/8),
+          this.bigRadius*Math.sin(3*Math.PI/8)),
+        new PIXI.Point(this.bigRadius-this.bigRadius*Math.cos(2*Math.PI/8),
+          this.bigRadius*Math.sin(2*Math.PI/8)),
+        new PIXI.Point(this.bigRadius-this.bigRadius*Math.cos(1*Math.PI/8),
+          this.bigRadius*Math.sin(1*Math.PI/8))
       ]);
       break;
     case 4:
       res = new PIXI.Polygon([
-        new PIXI.Point(0, bigRadius),
-        new PIXI.Point(0, smallRadius),
-        new PIXI.Point(smallRadius*Math.cos(Math.PI/4),
-          smallRadius*Math.sin(Math.PI/4)),
-        new PIXI.Point(smallRadius, 0),
-        new PIXI.Point(bigRadius, 0),
-        new PIXI.Point(bigRadius*Math.cos(1*Math.PI/8),
-          bigRadius*Math.sin(1*Math.PI/8)),
-        new PIXI.Point(bigRadius*Math.cos(2*Math.PI/8),
-          bigRadius*Math.sin(2*Math.PI/8)),
-        new PIXI.Point(bigRadius*Math.cos(3*Math.PI/8),
-          bigRadius*Math.sin(3*Math.PI/8))
+        new PIXI.Point(0, this.bigRadius),
+        new PIXI.Point(0, this.smallRadius),
+        new PIXI.Point(this.smallRadius*Math.cos(Math.PI/4),
+          this.smallRadius*Math.sin(Math.PI/4)),
+        new PIXI.Point(this.smallRadius, 0),
+        new PIXI.Point(this.bigRadius, 0),
+        new PIXI.Point(this.bigRadius*Math.cos(1*Math.PI/8),
+          this.bigRadius*Math.sin(1*Math.PI/8)),
+        new PIXI.Point(this.bigRadius*Math.cos(2*Math.PI/8),
+          this.bigRadius*Math.sin(2*Math.PI/8)),
+        new PIXI.Point(this.bigRadius*Math.cos(3*Math.PI/8),
+          this.bigRadius*Math.sin(3*Math.PI/8))
       ]);
       break;
     }
@@ -184,20 +193,39 @@ export default class extends Button {
     let res = null;
     switch(quadrant) {
     case 1:
-      res = {x: width/2 + buttonSpacing,
-        y: height/2 - bigRadius - buttonSpacing};
+      res = {x: this.width/2 + this.buttonSpacing,
+        y: this.height/2 - this.bigRadius - this.buttonSpacing};
       break;
     case 2:
-      res = {x: width/2 - bigRadius - buttonSpacing,
-        y: height/2 - bigRadius - buttonSpacing};
+      res = {x: this.width/2 - this.bigRadius - this.buttonSpacing,
+        y: this.height/2 - this.bigRadius - this.buttonSpacing};
       break;
     case 3:
-      res = {x: width/2 - bigRadius - buttonSpacing,
-        y: height/2 + buttonSpacing};
+      res = {x: this.width/2 - this.bigRadius - this.buttonSpacing,
+        y: this.height/2 + this.buttonSpacing};
       break;
     case 4:
-      res = {x: width/2 + buttonSpacing, y: height/2 + buttonSpacing};
+      res = {x: this.width/2 + this.buttonSpacing, y: this.height/2 + this.buttonSpacing};
       break;
+    }
+    return res;
+  }
+
+  static getColor(quadrant) {
+    let res = 0xFFFFFF;
+    switch(quadrant) {
+      case 1:
+        res = 0xFF0000;
+        break;
+      case 2:
+        res = 0x00CC00;
+        break;
+      case 3:
+        res = 0xFFFF00;
+        break;
+      case 4:
+        res = 0x06AEFF;
+        break;
     }
     return res;
   }

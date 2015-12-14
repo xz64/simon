@@ -1,6 +1,6 @@
 export default class {
   constructor(width, height) {
-    this.renderer = new PIXI.autoDetectRenderer(width, height,
+    this.renderer = new PIXI.WebGLRenderer(width, height,
       {antialiasing: true});
     this.renderer.autoResize = true;
     this.renderer.view.style.position = 'absolute';
