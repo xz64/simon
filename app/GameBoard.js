@@ -17,9 +17,14 @@ export default class {
     this.renderCallback = this.gameRenderer.render.bind(
       this.gameRenderer);
     this.gameEngine = new GameEngine(this.updateCallback, this.renderCallback);
+    this.colorButtons = [];
 
-    this.ctest = new ColorButton(this.width, this.height, 1, new Audio());
-    this.gameRenderer.addItem.call(this.gameRenderer, this.ctest.sprite);
+    for(let i = 0; i < 4; i++) {
+      this.colorButtons.push(new ColorButton(this.width, this.height, i+1, 
+        new Audio()));
+      this.gameRenderer.addItem.call(this.gameRenderer,
+        this.colorButtons[i].sprite);
+    }
 
     this.gameEngine.startGame();
   }
