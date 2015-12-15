@@ -42,7 +42,7 @@ export default class ColorButton extends Observable {
 
     mySprite.x = coords.x;
     mySprite.y = coords.y;
-    mySprite.hitArea = ColorButton.getHitPolygon.call(this.quadrant, this);
+    mySprite.hitArea = ColorButton.getHitPolygon.call(this, this.quadrant);
     mySprite.tint = 0x777777;
 
     return mySprite;
