@@ -21,7 +21,8 @@ export default class ColorButton extends Observable {
   createGraphics() {
     var graphics = new PIXI.Graphics();
     var angles = ColorButton.getAngles(this.quadrant);
-    var connectorLines = ColorButton.getConnectorLines(this.quadrant);
+    var connectorLines = ColorButton.getConnectorLines.call(this,
+      this.quadrant);
     var color = ColorButton.getColor(this.quadrant);
 
     graphics.beginFill(color);
@@ -39,19 +40,20 @@ export default class ColorButton extends Observable {
     let mySprite = new PIXI.Sprite(this.graphics.generateTexture());
     let coords = ColorButton.getXY.call(this, this.quadrant);
 
-    console.log(coords);
     mySprite.x = coords.x;
     mySprite.y = coords.y;
-    mySprite.hitArea = ColorButton.getHitPolygon(this.quadrant);
+    mySprite.hitArea = ColorButton.getHitPolygon.call(this.quadrant, this);
     mySprite.tint = 0x777777;
 
     return mySprite;
   }
 
   registerEventHandlers() {
-    this.sprite.mousedown = this.onMouseDown;
-    this.sprite.mouseup = this.onMouseUp;
-    this.sprite.mouseout = this.onMouseUp;
+    this.sprite.interactive = true;
+    this.sprite.buttonMode = true;
+    this.sprite.mousedown = this.onMouseDown.bind(this);
+    this.sprite.mouseup = this.onMouseUp.bind(this);
+    this.sprite.mouseout = this.onMouseUp.bind(this);
   }
 
   dim() {
@@ -63,21 +65,21 @@ export default class ColorButton extends Observable {
   }
 
   playAudio() {
-    audio.play();
+    this.audio.play();
   }
 
   pauseAudio() {
-    audio.pause();
+    this.audio.pause();
   }
 
   onMouseDown() {
-    light();
-    playAudio();
+    this.light();
+    this.playAudio();
   }
 
   onMouseUp() {
-    dim();
-    pauseAudio();
+    this.dim();
+    this.pauseAudio();
   }
 
   static getAngles(quadrant) {
