@@ -4,7 +4,7 @@ export default class {
   }
 
   addObserver(o) {
-    this.observers.push();
+    this.observers.push(o);
   }
 
   removeObserver(o) {
@@ -15,7 +15,7 @@ export default class {
     }
   }
 
-  notifyObserver(evt) {
+  notifyObservers(evt) {
     for(let i = 0; i < observers.length; i++) {
       observers[i].onNotify(evt);
     }
