@@ -4,6 +4,7 @@ import GameStateManager from './GameStateManager';
 import GameRenderer from './GameRenderer';
 import ColorButton from './ColorButton';
 import Audio from './Audio';
+import InputState from './InputState';
 
 export default class {
   constructor(width, height) {
@@ -26,6 +27,8 @@ export default class {
         this.colorButtons[i].sprite);
     }
 
+    this.ctest = new InputState(this.colorButtons);
+    this.gameStateManager.changeState(this.ctest);
     this.gameEngine.startGame();
   }
 }

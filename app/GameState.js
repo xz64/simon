@@ -10,4 +10,7 @@ export default class {
  
   update(step) {
   }
+
+  render() {
+  }
 }

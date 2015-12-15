@@ -50,7 +50,7 @@ export default class ColorButton extends Observable {
   }
 
   registerEventHandlers() {
-    this.sprite.interactive = true;
+    this.sprite.interactive = false;
     this.sprite.buttonMode = true;
     this.sprite.mousedown = this.onMouseDown.bind(this);
     this.sprite.mouseup = this.onMouseUp.bind(this);
@@ -84,6 +84,7 @@ export default class ColorButton extends Observable {
       this.dim();
       this.pauseAudio();
       this.pressed = false;
+      this.notifyObservers({quadrant: this.quadrant});
     }
   }
 

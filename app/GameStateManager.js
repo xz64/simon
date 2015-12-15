@@ -1,22 +1,21 @@
+import GameState from './GameState';
+
 export default class {
   constructor() {
-    this.currentState = {
-      render: () => {},
-      update: () => {}
-    };
+    this.currentState = new GameState();
   }
 
   changeState(newState) {
-    this.currentState.leaving();
+    this.currentState.leaving.call(this.currentState);
     this.currentState = newState;
-    this.currentState.entering();
+    this.currentState.entering.call(this.currentState);
   }
  
   update(step) {
-    this.currentState.update(step);
+    this.currentState.update.call(this.currentState,step);
   }
 
   render() {
-    this.currentState.render();
+    this.currentState.render.call(this.currentState);
   }
 }
