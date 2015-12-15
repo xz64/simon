@@ -16,6 +16,7 @@ export default class ColorButton extends Observable {
     this.registerEventHandlers();
     this.dim();
     this.audio = new Audio(audio);
+    this.pressed = false;
   }
 
   createGraphics() {
@@ -73,13 +74,17 @@ export default class ColorButton extends Observable {
   }
 
   onMouseDown() {
+    this.pressed = true;
     this.light();
     this.playAudio();
   }
 
   onMouseUp() {
-    this.dim();
-    this.pauseAudio();
+    if(this.pressed) {
+      this.dim();
+      this.pauseAudio();
+      this.pressed = false;
+    }
   }
 
   static getAngles(quadrant) {
