@@ -1,5 +1,5 @@
+import Observable from './Observable';
 import Audio from './Audio';
-import Observable from './Observable.js';
 
 export default class ColorButton extends Observable {
   constructor(width, height, quadrant, audio) {
@@ -55,6 +55,14 @@ export default class ColorButton extends Observable {
     this.sprite.mousedown = this.onMouseDown.bind(this);
     this.sprite.mouseup = this.onMouseUp.bind(this);
     this.sprite.mouseout = this.onMouseUp.bind(this);
+  }
+
+  disableInput() {
+    this.sprite.interactive = false;
+  }
+
+  enableInput() {
+    this.sprite.interactive = true;
   }
 
   dim() {
@@ -213,7 +221,8 @@ export default class ColorButton extends Observable {
         y: this.height/2 + this.buttonSpacing};
       break;
     case 4:
-      res = {x: this.width/2 + this.buttonSpacing, y: this.height/2 + this.buttonSpacing};
+      res = {x: this.width/2 + this.buttonSpacing,
+        y: this.height/2 + this.buttonSpacing};
       break;
     }
     return res;

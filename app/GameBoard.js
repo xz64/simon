@@ -1,10 +1,10 @@
-import PlayingPatternState from './PlayingPatternState';
 import GameEngine from './GameEngine';
 import GameStateManager from './GameStateManager';
 import GameRenderer from './GameRenderer';
 import ColorButton from './ColorButton';
 import Audio from './Audio';
 import InputState from './InputState';
+import OffState from './OffState';
 
 export default class {
   constructor(width, height) {
@@ -27,8 +27,9 @@ export default class {
         this.colorButtons[i].sprite);
     }
 
-    this.ctest = new InputState(this.colorButtons);
-    this.gameStateManager.changeState(this.ctest);
+    this.istate = new InputState(this.gameStateManager, this.colorButtons);
+    this.istate.addObserver.call(this.istate, this);
+    this.gameStateManager.changeState(this.istate);
     this.gameEngine.startGame();
   }
 }

@@ -2,7 +2,7 @@ import GameState from './GameState';
 
 export default class {
   constructor() {
-    this.currentState = new GameState();
+    this.currentState = new GameState(this);
   }
 
   changeState(newState) {
@@ -12,7 +12,7 @@ export default class {
   }
  
   update(step) {
-    this.currentState.update.call(this.currentState,step);
+    this.currentState.update.call(this.currentState, step);
   }
 
   render() {
