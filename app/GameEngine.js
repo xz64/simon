@@ -23,7 +23,7 @@ export default class {
     }
 
     this.renderCallback();
-    requestAnimationFrame(() => {this.gameLoop();});
+    requestAnimationFrame(this.gameLoop.bind(this));
   }
 
   startGame() {
