@@ -80,6 +80,16 @@ export default class ColorButton extends Observable {
   pauseAudio() {
     this.audio.pause();
   }
+  
+  turnOn() {
+    this.light();
+    this.playAudio();
+  }
+
+  turnOff() {
+    this.dim();
+    this.pauseAudio();
+  }
 
   onMouseDown() {
     this.pressed = true;
