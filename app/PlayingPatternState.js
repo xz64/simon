@@ -2,7 +2,7 @@ import OffState from './OffState';
 import GameState from './GameState';
 
 export default class extends GameState {
-  constructor(gameStateManager, colorButtons, pattern) {
+  constructor(gameStateManager, colorButtons, pattern, doneCallback) {
     super(gameStateManager);
     this.pattern = pattern;
     this.colorButtons = colorButtons;
@@ -11,6 +11,7 @@ export default class extends GameState {
     this.offTime = 200;
     this.state = 'off';
     this.currentButton;
+    this.doneCallback = doneCallback;
   }
 
   entering() {
@@ -41,8 +42,7 @@ export default class extends GameState {
         this.timeElapsed = 0;
         this.state = 'off';
         if(this.pattern.length === 0) {
-          this.gameStateManager.changeState(
-            new OffState(this.gameStateManager));
+          this.gameStateManager.changeState(this.doneCallback());
         }
       }
     }

@@ -2,8 +2,10 @@ import GameEngine from './GameEngine';
 import GameStateManager from './GameStateManager';
 import GameRenderer from './GameRenderer';
 import ColorButton from './ColorButton';
+import Scoreboard from './Scoreboard';
 import Audio from './Audio';
 import InputState from './InputState';
+import PlayingPatternState from './PlayingPatternState';
 import OffState from './OffState';
 
 export default class {
@@ -27,9 +29,36 @@ export default class {
         this.colorButtons[i].sprite);
     }
 
-    this.istate = new InputState(this.gameStateManager, this.colorButtons);
+    this.scoreboard = new Scoreboard(this.width, this.height);
+    this.gameRenderer.addItem.call(this.gameRenderer,
+      this.scoreboard.getRenderables.call(this.scoreboard));
+
+    this.istate = new InputState(
+      this.gameStateManager, 
+      this.colorButtons,
+      [1,2],
+      this.successInputCallback.bind(this),
+      this.errorInputCallback.bind(this)
+    );
     this.istate.addObserver.call(this.istate, this);
     this.gameStateManager.changeState(this.istate);
     this.gameEngine.startGame();
+  }
+
+  successInputCallback() {
+    this.scoreboard.incrementScore.call(this.scoreboard);
+    return new PlayingPatternState(this.gameStateManager, this.colorButtons, 
+      [1,2,3], this.playingDoneCallback.bind(this));
+  }
+
+  errorInputCallback() {
+    this.scoreboard.resetScore();
+    return new PlayingPatternState(this.gameStateManager, this.colorButtons,
+     [1,2], this.playingDoneCallback.bind(this));
+  }
+
+  playingDoneCallback() {
+    return new InputState(this.gameStateManager, this.colorButtons, [1],
+      this.successInputCallback.bind(this), this.errorInputCallback.bind(this));
   }
 }

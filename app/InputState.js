@@ -1,13 +1,14 @@
-import OffState from './OffState';
-import PlayingPatternState from './PlayingPatternState';
 import GameState from './GameState';
 
 export default class extends GameState {
-  constructor(gameStateManager, colorButtons, expectedBuffer) {
+  constructor(gameStateManager, colorButtons, expectedBuffer, successCallback,
+    errorCallback) {
     super(gameStateManager);
     this.inputBuffer = [];
     this.expectedBuffer = expectedBuffer;
     this.colorButtons = colorButtons;
+    this.successCallback = successCallback;
+    this.errorCallback = errorCallback;
   }
 
   entering() {
@@ -31,15 +32,15 @@ export default class extends GameState {
   }
 
   update(step) {
-    if(this.inputBuffer.length > 0) {
-      if(this.isMatch()) {
-        //this.changeState(new OffState(this.gameStateManager));
-        this.changeState(new PlayingPatternState(this.gameStateManager,
-          this.colorButtons, [1,2]));
-      }
-      if(this.inputBuffer.length > this.expectedBuffer.length) {
-          //TODO: Switch to replay state
-      }
+    if(this.inputBuffer.length < 1) {
+      return;
+    }
+
+    if(this.isMatch()) {
+      this.changeState(this.successCallback());
+    }
+    if(this.inputBuffer.length > this.expectedBuffer.length) {
+      this.changeState(this.errorCallback());
     }
   }
 
