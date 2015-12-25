@@ -41,10 +41,4 @@ export default class Scoreboard extends Observable {
   getRenderables() {
     return this.graphicsContainer;
   }
-
-  onNotify(evt) {
-    if(evt.type === 'Success') {
-      this.incrementScore();
-    }
-  }
 }

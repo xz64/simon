@@ -4,7 +4,7 @@ import GameState from './GameState';
 export default class extends GameState {
   constructor(gameStateManager, colorButtons, pattern, doneCallback) {
     super(gameStateManager);
-    this.pattern = pattern;
+    this.pattern = pattern.slice();
     this.colorButtons = colorButtons;
     this.timeElapsed = null;
     this.onTime = 500; // TODO: parameterize onTime/offTime config

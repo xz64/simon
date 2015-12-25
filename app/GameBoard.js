@@ -32,33 +32,35 @@ export default class {
     this.scoreboard = new Scoreboard(this.width, this.height);
     this.gameRenderer.addItem.call(this.gameRenderer,
       this.scoreboard.getRenderables.call(this.scoreboard));
+    this.sequence = [1,2];
 
-    this.istate = new InputState(
-      this.gameStateManager, 
-      this.colorButtons,
-      [1,2],
-      this.successInputCallback.bind(this),
-      this.errorInputCallback.bind(this)
-    );
-    this.istate.addObserver.call(this.istate, this);
-    this.gameStateManager.changeState(this.istate);
+    this.gameStateManager.changeState.call(this.gameStateManager,
+      this.createPlayingPatternState(this.sequence));
     this.gameEngine.startGame();
   }
 
   successInputCallback() {
     this.scoreboard.incrementScore.call(this.scoreboard);
-    return new PlayingPatternState(this.gameStateManager, this.colorButtons, 
-      [1,2,3], this.playingDoneCallback.bind(this));
+    this.sequence.push(4);
+    return this.createPlayingPatternState(this.sequence);
   }
 
   errorInputCallback() {
-    this.scoreboard.resetScore();
-    return new PlayingPatternState(this.gameStateManager, this.colorButtons,
-     [1,2], this.playingDoneCallback.bind(this));
+    this.scoreboard.resetScore.call(this.scoreboard);
+    return this.createPlayingPatternState(this.sequence);
   }
 
   playingDoneCallback() {
-    return new InputState(this.gameStateManager, this.colorButtons, [1],
+    return this.createInputState(this.sequence);
+  }
+
+  createPlayingPatternState(pattern) {
+    return new PlayingPatternState(this.gameStateManager, this.colorButtons,
+      pattern, this.playingDoneCallback.bind(this));
+  }
+
+  createInputState(pattern) {
+    return new InputState(this.gameStateManager, this.colorButtons, pattern,
       this.successInputCallback.bind(this), this.errorInputCallback.bind(this));
   }
 }
