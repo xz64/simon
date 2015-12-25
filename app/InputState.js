@@ -32,19 +32,29 @@ export default class extends GameState {
   }
 
   update(step) {
-    if(this.inputBuffer.length < 1) {
-      return;
+    if(!this.isMatchSoFar()) {
+      this.changeState(this.errorCallback());
     }
-
     if(this.isMatch()) {
       this.changeState(this.successCallback());
-    }
-    if(this.inputBuffer.length > this.expectedBuffer.length) {
-      this.changeState(this.errorCallback());
     }
   }
 
   render() {
+  }
+
+  isMatchSoFar() {
+    if(this.inputBuffer.length > this.expectedBuffer.length) {
+      return false;
+    }
+
+    for(let i = 0; i < this.inputBuffer.length; i++) {
+      if(this.inputBuffer[i] !== this.expectedBuffer[i]) {
+        return false;
+      }
+    }
+
+    return true;
   }
 
   isMatch() {
