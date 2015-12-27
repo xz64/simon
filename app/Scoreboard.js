@@ -1,8 +1,5 @@
-import Observable from './Observable';
-
-export default class Scoreboard extends Observable {
+export default class {
   constructor(width, height) {
-    super();
     this.width = width;
     this.height = height;
     this.boardSize = ( (width  < height) ? width : height ) - 30;

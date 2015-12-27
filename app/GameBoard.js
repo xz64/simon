@@ -7,11 +7,13 @@ import Audio from './Audio';
 import InputState from './InputState';
 import PlayingPatternState from './PlayingPatternState';
 import OffState from './OffState';
+import Sequence from './Sequence';
 
 export default class {
   constructor(width, height) {
     this.width = width;
     this.height = height;
+    this.strict = false;
     this.gameStateManager = new GameStateManager(this);
     this.updateCallback = this.gameStateManager.update.bind(
       this.gameStateManager);
@@ -32,7 +34,7 @@ export default class {
     this.scoreboard = new Scoreboard(this.width, this.height);
     this.gameRenderer.addItem.call(this.gameRenderer,
       this.scoreboard.getRenderables.call(this.scoreboard));
-    this.sequence = [1,2];
+    this.sequence = new Sequence(1);
 
     this.gameStateManager.changeState.call(this.gameStateManager,
       this.createPlayingPatternState(this.sequence));
@@ -41,13 +43,18 @@ export default class {
 
   successInputCallback() {
     this.scoreboard.incrementScore.call(this.scoreboard);
-    this.sequence.push(4);
+    this.sequence.addItem.call(this.sequence);
     return this.createPlayingPatternState(this.sequence);
   }
 
   errorInputCallback() {
-    this.scoreboard.resetScore.call(this.scoreboard);
     return this.createPlayingPatternState(this.sequence);
+  }
+
+  errorInputCallbackStrict() {
+    this.scoreboard.resetScore.call(this.scoreboard);
+    this.sequence = new Sequence(1);
+    return this.errorInputCallback();
   }
 
   playingDoneCallback() {
@@ -60,7 +67,9 @@ export default class {
   }
 
   createInputState(pattern) {
-    return new InputState(this.gameStateManager, this.colorButtons, pattern,
-      this.successInputCallback.bind(this), this.errorInputCallback.bind(this));
+    let errorCallback = this.strict ? this.errorInputCallbackStrict.bind(this) :
+      this.errorInputCallback.bind(this);
+    return new InputState(this.gameStateManager, this.colorButtons,
+      this.sequence, this.successInputCallback.bind(this), errorCallback);
   }
 }

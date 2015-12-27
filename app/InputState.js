@@ -1,11 +1,11 @@
 import GameState from './GameState';
 
 export default class extends GameState {
-  constructor(gameStateManager, colorButtons, expectedBuffer, successCallback,
+  constructor(gameStateManager, colorButtons, expectedSequence, successCallback,
     errorCallback) {
     super(gameStateManager);
     this.inputBuffer = [];
-    this.expectedBuffer = expectedBuffer;
+    this.expectedSequence = expectedSequence;
     this.colorButtons = colorButtons;
     this.successCallback = successCallback;
     this.errorCallback = errorCallback;
@@ -40,34 +40,17 @@ export default class extends GameState {
     }
   }
 
-  render() {
-  }
-
   isMatchSoFar() {
-    if(this.inputBuffer.length > this.expectedBuffer.length) {
-      return false;
-    }
-
-    for(let i = 0; i < this.inputBuffer.length; i++) {
-      if(this.inputBuffer[i] !== this.expectedBuffer[i]) {
-        return false;
-      }
-    }
-
-    return true;
+    return this.expectedSequence.equalSoFar.call(this.expectedSequence,
+      this.inputBuffer);
   }
 
   isMatch() {
-    if(this.inputBuffer.length !== this.expectedBuffer.length) {
-      return false;
-    }
-
-    for(let i = 0; i < this.inputBuffer.length; i++) {
-      if(this.inputBuffer[i] !== this.expectedBuffer[i]) {
-        return false;
-      }
-    }
-
-    return true;
+    return this.expectedSequence.equal.call(this.expectedSequence,
+      this.inputBuffer);
   }
+
+  render() {
+  }
+
 }
