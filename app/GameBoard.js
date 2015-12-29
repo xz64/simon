@@ -8,6 +8,7 @@ import InputState from './InputState';
 import PlayingPatternState from './PlayingPatternState';
 import OffState from './OffState';
 import Sequence from './Sequence';
+import OnOffSwitch from './OnOffSwitch';
 
 export default class {
   constructor(width, height) {
@@ -32,12 +33,15 @@ export default class {
     }
 
     this.scoreboard = new Scoreboard(this.width, this.height);
+    this.onOffSwitch = new OnOffSwitch(this.width, this.height,
+      this.onCallback.bind(this), this.offCallback.bind(this));
     this.gameRenderer.addItem.call(this.gameRenderer,
       this.scoreboard.getRenderables.call(this.scoreboard));
-    this.sequence = new Sequence(1);
+    this.gameRenderer.addItem.call(this.gameRenderer,
+      this.onOffSwitch.getRenderables.call(this.onOffSwitch));
 
-    this.gameStateManager.changeState.call(this.gameStateManager,
-      this.createPlayingPatternState(this.sequence));
+    this.gameStateManager.changeState.call(this.gameStateManager, 
+      new OffState(this.gameStateManager));
     this.gameEngine.startGame();
   }
 
@@ -71,5 +75,17 @@ export default class {
       this.errorInputCallback.bind(this);
     return new InputState(this.gameStateManager, this.colorButtons,
       this.sequence, this.successInputCallback.bind(this), errorCallback);
+  }
+
+  offCallback() {
+    this.gameStateManager.changeState.call(this.gameStateManager,
+      new OffState());
+  }
+
+  onCallback() {
+    this.sequence = new Sequence(1);
+    this.scoreboard.resetScore.call(this.scoreboard);
+    this.gameStateManager.changeState.call(this.gameStateManager,
+      this.createPlayingPatternState(this.sequence));
   }
 }

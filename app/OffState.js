@@ -1,10 +1,11 @@
-export default class {
+import GameState from './GameState';
+
+export default class extends GameState {
   constructor(gameStateManager) {
-    this.gameStateManager = gameStateManager;
+    super(gameStateManager);
   }
 
   entering() {
-    //TODO: Clear down all game state info
   }
 
   leaving() {
@@ -15,4 +16,5 @@ export default class {
 
   render() {
   }
+
 }
