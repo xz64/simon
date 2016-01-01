@@ -37,12 +37,12 @@ export default class {
       0.03*this.height, 5);
     sprite.interactive = true;
     sprite.buttonMode = true;
-    sprite.mouseup = this.onMouseUp.bind(this);
+    sprite.click = this.onClick.bind(this);
     sprite.position.x = 0.03*this.width;
     return sprite;
   }
 
-  onMouseUp() {
+  onClick() {
     if(this.button.position.x === 0) {
       this.button.position.x = 0.03*this.width;
       this.offCallback();
