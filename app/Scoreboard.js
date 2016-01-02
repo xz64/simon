@@ -11,14 +11,15 @@ export default class {
   }
 
   createScoreLabel() {
-    let text = new PIXI.Text("Score:", {font: "16px Arial", fill: "red"});
+    let text = new PIXI.Text("Number of steps:", {font: "16px Arial",
+      fill: "red"});
 
     return text;
   }
 
   createScoreCounterLabel() {
-    let text = new PIXI.Text("0", {font: "16px Arial", fill: "red"});
-    text.position.x = 0.13*this.boardSize;
+    let text = new PIXI.Text("1", {font: "16px Arial", fill: "red"});
+    text.position.x = 130;
     return text;
   }
 
@@ -32,7 +33,7 @@ export default class {
   }
 
   resetScore() {
-    this.scoreCounterLabel.text = 0;
+    this.scoreCounterLabel.text = "1";
   }
 
   getRenderables() {
