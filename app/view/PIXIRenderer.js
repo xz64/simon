@@ -1,5 +1,8 @@
-export default class {
+import GameRenderer from './GameRenderer';
+
+export default class extends GameRenderer {
   constructor(width, height) {
+    super(width, height);
     this.renderer = PIXI.autoDetectRenderer(width, height,
       {antialiasing: true});
     this.renderer.autoResize = true;

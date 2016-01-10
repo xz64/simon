@@ -1,9 +1,7 @@
-import Observable from './Observable';
 import Audio from './Audio';
 
-export default class ColorButton extends Observable {
-  constructor(width, height, quadrant, audio) {
-    super();
+export default class QuadrantButton {
+  constructor(width, height, quadrant) {
     this.width = width;
     this.height = height;
     this.boardSize = ( (width  < height) ? width : height ) - 30;
@@ -15,16 +13,21 @@ export default class ColorButton extends Observable {
     this.sprite = this.createSprite();
     this.registerEventHandlers();
     this.dim();
-    this.audio = new Audio(audio);
+    this.audio = new Audio();
     this.pressed = false;
+    this.emitter = new EventEmitter();
+  }
+
+  getRenderables() {
+    return this.sprite;
   }
 
   createGraphics() {
     var graphics = new PIXI.Graphics();
-    var angles = ColorButton.getAngles(this.quadrant);
-    var connectorLines = ColorButton.getConnectorLines.call(this,
+    var angles = QuadrantButton.getAngles(this.quadrant);
+    var connectorLines = QuadrantButton.getConnectorLines.call(this,
       this.quadrant);
-    var color = ColorButton.getColor(this.quadrant);
+    var color = QuadrantButton.getColor(this.quadrant);
 
     graphics.beginFill(color);
     graphics.lineStyle(1, color, 1);
@@ -39,11 +42,11 @@ export default class ColorButton extends Observable {
 
   createSprite() {
     let mySprite = new PIXI.Sprite(this.graphics.generateTexture());
-    let coords = ColorButton.getXY.call(this, this.quadrant);
+    let coords = QuadrantButton.getXY.call(this, this.quadrant);
 
     mySprite.x = coords.x;
     mySprite.y = coords.y;
-    mySprite.hitArea = ColorButton.getHitPolygon.call(this, this.quadrant);
+    mySprite.hitArea = QuadrantButton.getHitPolygon.call(this, this.quadrant);
     mySprite.tint = 0x777777;
 
     return mySprite;
@@ -74,11 +77,11 @@ export default class ColorButton extends Observable {
   }
 
   playAudio() {
-    this.audio.play();
+    this.audio.play.call(this.audio);
   }
 
   pauseAudio() {
-    this.audio.pause();
+    this.audio.pause.call(this.audio);
   }
   
   turnOn() {
@@ -93,6 +96,7 @@ export default class ColorButton extends Observable {
 
   onMouseDown() {
     this.pressed = true;
+    this.emitter.emit('inputOn');
     this.light();
     this.playAudio();
   }
@@ -102,7 +106,7 @@ export default class ColorButton extends Observable {
       this.dim();
       this.pauseAudio();
       this.pressed = false;
-      this.notifyObservers({quadrant: this.quadrant});
+      this.emitter.emit('inputOff');
     }
   }
 

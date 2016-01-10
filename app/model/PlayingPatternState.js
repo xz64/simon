@@ -2,10 +2,10 @@ import OffState from './OffState';
 import GameState from './GameState';
 
 export default class extends GameState {
-  constructor(gameStateManager, colorButtons, pattern, doneCallback) {
-    super(gameStateManager);
+  constructor(quadrantButtons, pattern, doneCallback) {
+    super();
     this.pattern = pattern.sequence.slice();
-    this.colorButtons = colorButtons;
+    this.quadrantButtons = quadrantButtons;
     this.timeElapsed = null;
     this.onTime = 500; // TODO: parameterize onTime/offTime config
     this.offTime = 200;
@@ -21,6 +21,14 @@ export default class extends GameState {
   leaving() {
   }
 
+  turnOn(index) {
+    this.quadrantButtons[index].turnOn.call(this.quadrantButtons[index]);
+  }
+
+  turnOff(index) {
+    this.quadrantButtons[index].turnOff.call(this.quadrantButtons[index]);
+  }
+
   update(step) {
     this.timeElapsed += 1000/30; // TODO: remove magic number
 
@@ -32,17 +40,17 @@ export default class extends GameState {
     }
     else if(this.state === 'turnOn') {
       this.currentButton = this.pattern.shift();
-      this.colorButtons[this.currentButton-1].turnOn();
+      this.turnOn(this.currentButton-1);
       this.timeElapsed = 0;
       this.state = 'on';
     }
     else if(this.state === 'on') {
       if(this.timeElapsed > this.onTime) {
-        this.colorButtons[this.currentButton-1].turnOff();
+        this.turnOff(this.currentButton-1);
         this.timeElapsed = 0;
         this.state = 'off';
         if(this.pattern.length === 0) {
-          this.gameStateManager.changeState(this.doneCallback());
+          this.doneCallback();
         }
       }
     }

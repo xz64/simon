@@ -1,6 +1,5 @@
 export default class {
-  constructor(audio) {
-    this.audio = audio;
+  constructor() {
   }
 
   play() {
