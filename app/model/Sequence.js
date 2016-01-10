@@ -1,6 +1,11 @@
 export default class {
   constructor(length) {
     this.sequence = [];
+
+    if(!length) {
+      length = 1;
+    }
+
     for(let i = 0; i < length; i++) {
       this.addItem();
     }

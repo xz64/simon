@@ -4,7 +4,7 @@ var outputDir = 'dist'
 
 module.exports = {
   entry: {
-    vendor: ['pixi.js', 'jquery'],
+    vendor: ['pixi.js', 'jquery', 'EventEmitter'],
     app: path.join(__dirname, 'app', 'main.js')
   },
   output: {
@@ -15,6 +15,9 @@ module.exports = {
     new webpack.optimize.CommonsChunkPlugin('vendor', 'vendor.js'),
     new webpack.ProvidePlugin({
       $: 'jquery'
+    }),
+    new webpack.ProvidePlugin({
+      EventEmitter: 'EventEmitter'
     })
   ],
   module: {
@@ -37,7 +40,9 @@ module.exports = {
       'pixi.js': path.join(__dirname, 'node_modules', 'pixi.js', 'bin',
         'pixi.min.js'),
       'jquery': path.join(__dirname, 'node_modules', 'jquery', 'dist',
-        'jquery.min.js')
+        'jquery.min.js'),
+      'EventEmitter': path.join(__dirname, 'node_modules', 'eventemitter3',
+        'index.js')
     }
   },
   devtool: '#source-map'

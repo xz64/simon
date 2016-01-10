@@ -1,8 +1,8 @@
-import GameState from './GameState';
+import OffState from './OffState';
 
 export default class {
   constructor() {
-    this.currentState = new GameState(this);
+    this.currentState = new OffState(this);
   }
 
   changeState(newState) {

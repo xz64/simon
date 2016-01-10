@@ -1,5 +1,3 @@
-import GameRenderer from './GameRenderer';
-
 export default class {
   constructor(updateCallback, renderCallback) {
     this.updateCallback = updateCallback;
@@ -8,6 +6,7 @@ export default class {
     this.previousTime = null;
     this.timeElapsed = null;
     this.MS_PER_UPDATE = 1000/30;
+    this.gameLoop = this.gameLoop.bind(this);
     this.lag = null; 
   }
 
@@ -23,7 +22,7 @@ export default class {
     }
 
     this.renderCallback();
-    requestAnimationFrame(this.gameLoop.bind(this));
+    requestAnimationFrame(this.gameLoop);
   }
 
   startGame() {
