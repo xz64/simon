@@ -16,13 +16,13 @@ export default class {
 
     this.quadrantButtonControllers = [];
 
-    for(let i = 0; i < 3; i++) {
+    for(let i = 0; i < 4; i++) {
       this.quadrantButtonControllers.push(new QuadrantButtonController(
         this.gameBoard.quadrantButtons[i],
         this.gameBoardView.quadrantButtons[i]));
       this.quadrantButtonControllers[i].emitter.on('input', this.onInput, this);
     }
-
+    
     this.gameEngine = new GameEngine(this.updateCallback, this.renderCallback);
     this.gameEngine.startGame();
   }

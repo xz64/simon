@@ -1,6 +1,7 @@
 import OffState from './OffState';
 import GameStateManager from './GameStateManager';
 import PlayingPatternState from './PlayingPatternState';
+import InputState from './InputState';
 import Sequence from './Sequence';
 import QuadrantButton from './QuadrantButton';
 
@@ -17,8 +18,6 @@ export default class {
     for(let i = 0; i < 4; i++) {
       this.quadrantButtons.push(new QuadrantButton(i+1));
     }
-
-    this.changeState(this.getCurrentPlayingPatternState());
   }
 
   update() {
@@ -30,6 +29,10 @@ export default class {
     this.score = 0;
     this.inputBuffer = [];
     this.changeState(new OffState());
+  }
+  
+  turnOn() {
+    this.changeState(this.getCurrentPlayingPatternState());
   }
 
   toggleStrict(value) {
@@ -73,7 +76,7 @@ export default class {
     }
     else {
       this.sequence.addItem.call(this.sequence);
-      // change to playing pattern state
+      this.changeState(this.getCurrentPlayingPatternState());
     }
   }
 
