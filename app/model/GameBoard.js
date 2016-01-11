@@ -1,5 +1,6 @@
 import OffState from './OffState';
 import GameStateManager from './GameStateManager';
+import PlayingPatternState from './PlayingPatternState';
 import Sequence from './Sequence';
 import QuadrantButton from './QuadrantButton';
 
@@ -16,6 +17,8 @@ export default class {
     for(let i = 0; i < 4; i++) {
       this.quadrantButtons.push(new QuadrantButton(i+1));
     }
+
+    this.changeState(this.getCurrentPlayingPatternState());
   }
 
   update() {
@@ -47,6 +50,11 @@ export default class {
 
   onMatch() {
     this.advanceLevel();
+  }
+
+  getCurrentPlayingPatternState() {
+    return new PlayingPatternState(this.quadrantButtons, this.sequence,
+      this.reset.bind(this));
   }
 
   onMismatch() {

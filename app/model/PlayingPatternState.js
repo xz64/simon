@@ -16,9 +16,15 @@ export default class extends GameState {
 
   entering() {
     this.timeElapsed = 0;
+    for(let i = 0; i < this.quadrantButtons.length; i++) {
+      this.quadrantButtons[i].lock.call(this.quadrantButtons[i]);
+    }
   }
 
   leaving() {
+    for(let i = 0; i < this.quadrantButtons.length; i++) {
+      this.quadrantButtons[i].unlock.call(this.quadrantButtons[i]);
+    }
   }
 
   turnOn(index) {
