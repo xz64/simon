@@ -22,7 +22,7 @@ export default class {
         this.gameBoardView.quadrantButtons[i]));
       this.quadrantButtonControllers[i].emitter.on('input', this.onInput, this);
     }
-    
+
     this.gameEngine = new GameEngine(this.updateCallback, this.renderCallback);
     this.gameEngine.startGame();
   }
