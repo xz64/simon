@@ -11,6 +11,8 @@ export default class {
     this.height = height;
     this.gameBoard = new GameBoard();
     this.gameBoardView = new GameBoardView(this.width, this.height);
+    this.gameBoardView.emitter.on('on', this.turnOn, this);
+    this.gameBoardView.emitter.on('off', this.turnOff, this);
     this.updateCallback = this.update.bind(this);
     this.renderCallback = this.render.bind(this);
 
@@ -29,6 +31,14 @@ export default class {
 
   addRenderable(item) {
     this.gameRenderer.addItem.call(this.gameRenderer, item);
+  }
+
+  turnOff() {
+    this.gameBoard.reset();
+  }
+
+  turnOn() {
+    this.gameBoard.begin();
   }
 
   render() {
