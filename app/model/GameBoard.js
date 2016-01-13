@@ -28,11 +28,11 @@ export default class {
     this.sequence = new Sequence();
     this.score = 0;
     this.inputBuffer = [];
-    this.changeState(new OffState());
+    this.changeState(new OffState(this));
   }
   
-  turnOn() {
-    this.changeState(this.getCurrentPlayingPatternState());
+  begin() {
+    this.playCurrentPattern();
   }
 
   toggleStrict(value) {
@@ -55,9 +55,9 @@ export default class {
     this.advanceLevel();
   }
 
-  getCurrentPlayingPatternState() {
-    return new PlayingPatternState(this.quadrantButtons, this.sequence,
-      this.reset.bind(this));
+  playCurrentPattern() {
+    this.changeState(new PlayingPatternState(this.quadrantButtons,
+      this.sequence, this.reset.bind(this)));
   }
 
   onMismatch() {
@@ -65,7 +65,7 @@ export default class {
       this.reset();
     }
     else {
-      // replay pattern
+      this.playCurrentPattern();
     }
   }
   
@@ -76,7 +76,7 @@ export default class {
     }
     else {
       this.sequence.addItem.call(this.sequence);
-      this.changeState(this.getCurrentPlayingPatternState());
+      this.playCurrentPattern();
     }
   }
 
