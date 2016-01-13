@@ -7,7 +7,7 @@ export default class {
     this.quadrantButton.emitter.on('turnOff', this.turnOff, this);
     this.quadrantButton.emitter.on('lock', this.disableInput, this);
     this.quadrantButton.emitter.on('unlock', this.enableInput, this);
-    this.quadrantButtonView.emitter.on('onInput', this.onInput, this);
+    this.quadrantButtonView.emitter.on('pressed', this.onInput, this);
   }
 
   turnOn() {

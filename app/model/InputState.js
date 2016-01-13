@@ -19,6 +19,8 @@ export default class extends GameState {
       this.gameBoard.quadrantButtons[i].lock.call(
         this.gameBoard.quadrantButtons[i]);
     }
+
+    this.gameBoard.inputBuffer = [];
   }
 
   update(step) {
@@ -26,7 +28,7 @@ export default class extends GameState {
       this.gameBoard.onMismatch.call(this.gameBoard);
     }
     else if(this.gameBoard.isMatch.call(this.gameBoard)) {
-      this.gameBoard.isMatch.call(this.gameBoard);
+      this.gameBoard.onMatch.call(this.gameBoard);
     }
   }
 }

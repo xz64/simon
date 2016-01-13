@@ -55,9 +55,13 @@ export default class {
     this.advanceLevel();
   }
 
+  waitForInput() {
+    this.changeState(new InputState(this));
+  }
+
   playCurrentPattern() {
     this.changeState(new PlayingPatternState(this.quadrantButtons,
-      this.sequence, this.reset.bind(this)));
+      this.sequence, this.waitForInput.bind(this)));
   }
 
   onMismatch() {
