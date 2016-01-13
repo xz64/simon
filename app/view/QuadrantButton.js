@@ -96,7 +96,6 @@ export default class QuadrantButton {
 
   onMouseDown() {
     this.pressed = true;
-    this.emitter.emit('inputOn');
     this.light();
     this.playAudio();
   }
@@ -106,7 +105,7 @@ export default class QuadrantButton {
       this.dim();
       this.pauseAudio();
       this.pressed = false;
-      this.emitter.emit('inputOff');
+      this.emitter.emit('pressed');
     }
   }
 
