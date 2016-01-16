@@ -2,10 +2,11 @@ import OffState from './OffState';
 import GameState from './GameState';
 
 export default class extends GameState {
-  constructor(quadrantButtons, pattern, doneCallback) {
+  constructor(gameBoard, doneCallback) {
     super();
-    this.pattern = pattern.sequence.slice();
-    this.quadrantButtons = quadrantButtons;
+    this.gameBoard = gameBoard;
+    this.pattern = this.gameBoard.sequence.sequence.slice();
+    this.quadrantButtons = this.gameBoard.quadrantButtons;
     this.timeElapsed = null;
     this.onTime = 500; // TODO: parameterize onTime/offTime config
     this.offTime = 200;

@@ -4,13 +4,14 @@ import PlayingPatternState from './PlayingPatternState';
 import InputState from './InputState';
 import Sequence from './Sequence';
 import QuadrantButton from './QuadrantButton';
+import NotifySuccessState from './NotifySuccessState';
 
 export default class {
   constructor() {
     this.WIN_SCORE = 20;
     this.strict = false;
     this.sequence = new Sequence();
-    this.gameStateManager = new GameStateManager();
+    this.emitter = new EventEmitter();
     this.score = 0;
     this.inputBuffer = [];
     this.quadrantButtons = [];
@@ -20,21 +21,12 @@ export default class {
     }
   }
 
-  update() {
-    this.gameStateManager.update.call(this.gameStateManager);
-  }
-
   reset() {
     this.sequence = new Sequence();
     this.score = 0;
     this.inputBuffer = [];
-    this.changeState(new OffState(this));
   }
   
-  begin() {
-    this.playCurrentPattern();
-  }
-
   toggleStrict(value) {
     this.strict = value ? value : !this.strict;
   }
@@ -43,48 +35,8 @@ export default class {
     this.inputBuffer.push(quadrant);
   }
 
-  isMatch() {
-    return this.sequence.equal.call(this.sequence, this.inputBuffer);
-  }
-
-  isMatchSoFar(input) {
-    return this.sequence.equalSoFar.call(this.sequence, this.inputBuffer);
-  }
-
-  onMatch() {
-    this.advanceLevel();
-  }
-
-  waitForInput() {
-    this.changeState(new InputState(this));
-  }
-
-  playCurrentPattern() {
-    this.changeState(new PlayingPatternState(this.quadrantButtons,
-      this.sequence, this.waitForInput.bind(this)));
-  }
-
-  onMismatch() {
-    if(this.strict) {
-      this.reset();
-    }
-    else {
-      this.playCurrentPattern();
-    }
-  }
-  
   advanceLevel() {
     this.score++;
-    if(this.score === this.WIN_SCORE) {
-      // notify user of victory
-    }
-    else {
-      this.sequence.addItem.call(this.sequence);
-      this.playCurrentPattern();
-    }
-  }
-
-  changeState(newState) {
-    this.gameStateManager.changeState.call(this.gameStateManager, newState);
+    this.sequence.addItem.call(this.sequence);
   }
 }
