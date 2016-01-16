@@ -1,10 +1,12 @@
-import OffState from './OffState';
 import GameState from './GameState';
 
 export default class extends GameState {
-  constructor(gameBoard) {
+  constructor(gameBoard, gameLogicService) {
     super();
     this.gameBoard = gameBoard;
+    this.gameLogicService = gameLogicService;
+    this.expectedSequence = this.gameBoard.sequence;
+    this.inputBuffer = this.gameBoard.inputBuffer;
   }
 
   entering() {
@@ -24,11 +26,13 @@ export default class extends GameState {
   }
 
   update(step) {
-    if(!this.gameBoard.isMatchSoFar.call(this.gameBoard)) {
-      this.gameBoard.onMismatch.call(this.gameBoard);
+    if(!this.expectedSequence.equalSoFar.call(this.expectedSequence,
+      this.inputBuffer)) {
+      this.gameLogicService.onMismatch.call(this.gameLogicService);
     }
-    else if(this.gameBoard.isMatch.call(this.gameBoard)) {
-      this.gameBoard.onMatch.call(this.gameBoard);
+    else if(this.expectedSequence.equal.call(this.expectedSequence,
+      this.inputBuffer)) {
+      this.gameLogicService.onMatch.call(this.gameLogicService);
     }
   }
 }

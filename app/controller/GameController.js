@@ -1,6 +1,7 @@
 import GameEngine from './GameEngine';
 import PIXIRenderer from '../view/PIXIRenderer';
 import GameBoard from '../model/GameBoard';
+import GameLogicService from '../model/GameLogicService.js';
 import GameBoardView from '../view/GameBoard';
 import QuadrantButtonView from '../view/QuadrantButton';
 import QuadrantButtonController from './QuadrantButtonController';
@@ -11,8 +12,11 @@ export default class {
     this.height = height;
     this.gameBoard = new GameBoard();
     this.gameBoardView = new GameBoardView(this.width, this.height);
+    this.gameLogicService = new GameLogicService(this.gameBoard);
     this.gameBoardView.emitter.on('on', this.turnOn, this);
     this.gameBoardView.emitter.on('off', this.turnOff, this);
+    this.gameBoard.emitter.on('NotifySuccessOn', this.showSuccess, this);
+    this.gameBoard.emitter.on('NotifySuccessOff', this.hideSuccess, this);
     this.updateCallback = this.update.bind(this);
     this.renderCallback = this.render.bind(this);
 
@@ -33,12 +37,18 @@ export default class {
     this.gameRenderer.addItem.call(this.gameRenderer, item);
   }
 
+  showSuccess() {
+  }
+
+  hideSuccess() {
+  }
+
   turnOff() {
-    this.gameBoard.reset();
+    this.gameLogicService.reset();
   }
 
   turnOn() {
-    this.gameBoard.begin();
+    this.gameLogicService.begin();
   }
 
   render() {
@@ -46,7 +56,7 @@ export default class {
   }
 
   update() {
-    this.gameBoard.update.call(this.gameBoard);
+    this.gameLogicService.update.call(this.gameLogicService);
   }
 
   onInput(quadrant) {

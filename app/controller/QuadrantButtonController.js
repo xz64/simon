@@ -3,30 +3,18 @@ export default class {
     this.quadrantButton = quadrantButton;
     this.quadrantButtonView = quadrantButtonView;
     this.emitter = new EventEmitter();
-    this.quadrantButton.emitter.on('turnOn', this.turnOn, this);
-    this.quadrantButton.emitter.on('turnOff', this.turnOff, this);
-    this.quadrantButton.emitter.on('lock', this.disableInput, this);
-    this.quadrantButton.emitter.on('unlock', this.enableInput, this);
+    this.quadrantButton.emitter.on('turnOn', this.quadrantButtonView.turnOn,
+      this.quadrantButtonView);
+    this.quadrantButton.emitter.on('turnOff', this.quadrantButtonView.turnOff,
+      this.quadrantButtonView);
+    this.quadrantButton.emitter.on('lock', this.quadrantButtonView.disableInput,
+      this.quadrantButtonView);
+    this.quadrantButton.emitter.on('unlock', 
+      this.quadrantButtonView.enableInput, this.quadrantButtonView);
     this.quadrantButtonView.emitter.on('pressed', this.onInput, this);
-  }
-
-  turnOn() {
-    this.quadrantButtonView.turnOn.call(this.quadrantButtonView);
-  }
-
-  turnOff() {
-    this.quadrantButtonView.turnOff.call(this.quadrantButtonView);
   }
 
   onInput() {
     this.emitter.emit('input', this.quadrantButtonView.quadrant);
-  }
-
-  disableInput() {
-    this.quadrantButtonView.disableInput.call(this.quadrantButtonView);
-  }
-
-  enableInput() {
-    this.quadrantButtonView.enableInput.call(this.quadrantButtonView);
   }
 }
