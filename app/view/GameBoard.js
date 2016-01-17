@@ -13,17 +13,9 @@ export default class {
     this.onOffSwitch.emitter.on('on', this.turnOn, this);
     this.onOffSwitch.emitter.on('off', this.turnOff, this);
     this.notifications = {
-      success: new SuccessIcon()
+      success: new SuccessIcon(this.width, this.height)
     };
 
-    for(var msg in this.notifications) {
-      if(!this.notifications.hasOwnProperty(msg)) {
-        continue;
-      }
-
-      this.addRenderable(this.notifications[msg].getRenderables.call(
-        this.notifications[msg]));
-    }
     this.addRenderable(this.onOffSwitch.getRenderables.call(this.onOffSwitch));
     this.emitter = new EventEmitter();
     // TODO: put all renderables in an array and call addRenderable that way
@@ -33,6 +25,15 @@ export default class {
         i+1));
       this.addRenderable(this.quadrantButtons[i].getRenderables.call(
         this.quadrantButtons[i]));
+    }
+
+    for(var msg in this.notifications) {
+      if(!this.notifications.hasOwnProperty(msg)) {
+        continue;
+      }
+
+      this.addRenderable(this.notifications[msg].getRenderables.call(
+        this.notifications[msg]));
     }
   }
 
