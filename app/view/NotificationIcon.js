@@ -1,11 +1,11 @@
 
 export default class {
-  constructor(width, height) {
+  constructor(width, height, imageURL) {
     this.width = width;
     this.height = height;
     this.emitter = new EventEmitter();
     this.graphicsContainer = new PIXI.Container();
-    this.imageURL = require('../../asset/check_mark.png');
+    this.imageURL = imageURL;
     this.img = new Image();
     this.img.src = this.imageURL;
     this.sprite = this.createSprite(this.imageURL);

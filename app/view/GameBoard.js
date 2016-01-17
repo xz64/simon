@@ -1,7 +1,7 @@
 import PIXIRenderer from './PIXIRenderer';
 import QuadrantButton from './QuadrantButton';
 import OnOffSwitch from './OnOffSwitch';
-import SuccessIcon from './SuccessIcon';
+import NotificationIcon from './NotificationIcon';
 
 export default class {
   constructor(width, height) {
@@ -13,7 +13,8 @@ export default class {
     this.onOffSwitch.emitter.on('on', this.turnOn, this);
     this.onOffSwitch.emitter.on('off', this.turnOff, this);
     this.notifications = {
-      success: new SuccessIcon(this.width, this.height)
+      success: new NotificationIcon(this.width, this.height,
+        require('../../asset/check_mark.png'))
     };
 
     this.addRenderable(this.onOffSwitch.getRenderables.call(this.onOffSwitch));
