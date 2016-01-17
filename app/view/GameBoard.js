@@ -1,6 +1,7 @@
 import PIXIRenderer from './PIXIRenderer';
 import QuadrantButton from './QuadrantButton';
 import OnOffSwitch from './OnOffSwitch';
+import SuccessIcon from './SuccessIcon';
 
 export default class {
   constructor(width, height) {
@@ -11,7 +12,19 @@ export default class {
     this.onOffSwitch = new OnOffSwitch(this.width, this.height);
     this.onOffSwitch.emitter.on('on', this.turnOn, this);
     this.onOffSwitch.emitter.on('off', this.turnOff, this);
-    this.addRenderable(this.onOffSwitch.getRenderables());
+    this.notifications = {
+      success: new SuccessIcon()
+    };
+
+    for(var msg in this.notifications) {
+      if(!this.notifications.hasOwnProperty(msg)) {
+        continue;
+      }
+
+      this.addRenderable(this.notifications[msg].getRenderables.call(
+        this.notifications[msg]));
+    }
+    this.addRenderable(this.onOffSwitch.getRenderables.call(this.onOffSwitch));
     this.emitter = new EventEmitter();
     // TODO: put all renderables in an array and call addRenderable that way
 
