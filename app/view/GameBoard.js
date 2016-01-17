@@ -14,7 +14,9 @@ export default class {
     this.onOffSwitch.emitter.on('off', this.turnOff, this);
     this.notifications = {
       success: new NotificationIcon(this.width, this.height,
-        require('../../asset/check_mark.png'))
+        require('../../asset/check_mark.png')),
+      failure: new NotificationIcon(this.width, this.height,
+        require('../../asset/x_mark.png'))
     };
 
     this.addRenderable(this.onOffSwitch.getRenderables.call(this.onOffSwitch));
