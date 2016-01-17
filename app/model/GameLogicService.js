@@ -38,6 +38,10 @@ export default class {
     this.changeState(new NotificationState(this, 'success', callback));
   }
 
+  notifyFailure(callback) {
+    this.changeState(new NotificationState(this, 'failure', callback));
+  }
+
   waitForInput() {
     this.changeState(new InputState(this.gameBoard, this));
   }
@@ -48,10 +52,12 @@ export default class {
   }
 
   onMismatch() {
-    if(this.gameBoard.strict) {
-      this.reset();
-    }
-    this.playCurrentPattern();
+    this.notifyFailure(() => {
+      if(this.gameBoard.strict) {
+        this.reset();
+      }
+      this.playCurrentPattern();
+    });
   }
   
   advanceLevel() {
