@@ -42,6 +42,10 @@ export default class {
     this.changeState(new NotificationState(this, 'failure', callback));
   }
 
+  notifyWin(callback) {
+    this.changeState(new NotificationState(this, 'win', callback));
+  }
+
   waitForInput() {
     this.changeState(new InputState(this.gameBoard, this));
   }
@@ -64,8 +68,11 @@ export default class {
     this.gameBoard.advanceLevel.call(this.gameBoard);
     if(this.gameBoard.score === this.gameBoard.WIN_SCORE) {
       this.reset();
+      this.notifyWin(this.playCurrentPattern.bind(this));
     }
-    this.playCurrentPattern();
+    else {
+      this.playCurrentPattern();
+    }
   }
 
   changeState(newState) {

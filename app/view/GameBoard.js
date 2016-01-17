@@ -16,7 +16,9 @@ export default class {
       success: new NotificationIcon(this.width, this.height,
         require('../../asset/check_mark.png')),
       failure: new NotificationIcon(this.width, this.height,
-        require('../../asset/x_mark.png'))
+        require('../../asset/x_mark.png')),
+      win: new NotificationIcon(this.width, this.height,
+        require('../../asset/win.png'))
     };
 
     this.addRenderable(this.onOffSwitch.getRenderables.call(this.onOffSwitch));
