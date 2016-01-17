@@ -32,6 +32,12 @@ module.exports = {
         query: {
           presets: ['es2015']
         }
+      },
+      {
+        test: /.png$/,
+        exclude: /node_modules/,
+        loader: 'url-loader',
+        query: { mimetype: 'image/png' }
       }
     ]
   },

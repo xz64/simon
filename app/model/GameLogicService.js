@@ -4,7 +4,7 @@ import PlayingPatternState from './PlayingPatternState';
 import InputState from './InputState';
 import Sequence from './Sequence';
 import QuadrantButton from './QuadrantButton';
-import NotifySuccessState from './NotifySuccessState';
+import NotificationState from './NotificationState';
 
 export default class {
   constructor(gameBoard) {
@@ -18,12 +18,16 @@ export default class {
   }
 
   begin() {
+    this.reset();
     this.playCurrentPattern();
   }
 
   reset() {
     this.gameBoard.reset.call(this.gameBoard);
-    this.playCurrentPattern();
+  }
+
+  turnOff() {
+    this.changeState(new OffState(this.gameBoard));
   }
 
   onMatch() {
@@ -31,7 +35,7 @@ export default class {
   }
 
   notifySuccess(callback) {
-    this.changeState(new NotifySuccessState(this.gameBoard, callback));
+    this.changeState(new NotificationState(this, 'success', callback));
   }
 
   waitForInput() {
@@ -47,9 +51,7 @@ export default class {
     if(this.gameBoard.strict) {
       this.reset();
     }
-    else {
-      this.playCurrentPattern();
-    }
+    this.playCurrentPattern();
   }
   
   advanceLevel() {

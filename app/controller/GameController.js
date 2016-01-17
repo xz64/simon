@@ -5,6 +5,7 @@ import GameLogicService from '../model/GameLogicService.js';
 import GameBoardView from '../view/GameBoard';
 import QuadrantButtonView from '../view/QuadrantButton';
 import QuadrantButtonController from './QuadrantButtonController';
+import NotificationController from './NotificationController';
 
 export default class {
   constructor(width, height) {
@@ -15,12 +16,12 @@ export default class {
     this.gameLogicService = new GameLogicService(this.gameBoard);
     this.gameBoardView.emitter.on('on', this.turnOn, this);
     this.gameBoardView.emitter.on('off', this.turnOff, this);
-    this.gameBoard.emitter.on('NotifySuccessOn', this.showSuccess, this);
-    this.gameBoard.emitter.on('NotifySuccessOff', this.hideSuccess, this);
     this.updateCallback = this.update.bind(this);
     this.renderCallback = this.render.bind(this);
 
     this.quadrantButtonControllers = [];
+    this.notificationController = new NotificationController(
+      this.gameLogicService.emitter, this.gameBoardView.notifications);
 
     for(let i = 0; i < 4; i++) {
       this.quadrantButtonControllers.push(new QuadrantButtonController(
@@ -44,7 +45,7 @@ export default class {
   }
 
   turnOff() {
-    this.gameLogicService.reset();
+    this.gameLogicService.turnOff();
   }
 
   turnOn() {
