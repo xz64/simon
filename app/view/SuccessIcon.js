@@ -8,17 +8,16 @@ export default class {
     this.imageURL = require('../../asset/check_mark.png');
     this.img = new Image();
     this.img.src = this.imageURL;
-    this.base = new PIXI.BaseTexture(this.img);
-    this.texture = new PIXI.Texture(this.base);
-    this.sprite = this.createSprite(this.texture);
+    this.sprite = this.createSprite(this.imageURL);
     this.graphicsContainer.addChild(this.sprite);
     this.hide();
   }
 
-  createSprite(texture) {
-    let sprite = new PIXI.Sprite(texture);
-    sprite.interactive = true;
-    sprite.buttonMode = true;
+  createSprite(filename) {
+    let sprite = new PIXI.Sprite.fromImage(filename);
+    /* TODO use asset preloader to avoid magic numbers */
+    sprite.position.x = this.width/2 - 64;
+    sprite.position.y = this.height/2 - 64;
     return sprite;
   }
 
