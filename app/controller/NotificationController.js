@@ -7,12 +7,10 @@ export default class {
   }
 
   showNotification(type) {
-    console.log("SHOW");
     this.notifications[type].show();
   }
 
   hideNotification(type) {
-    console.log("HIDE");
     this.notifications[type].hide();
   }
 }
