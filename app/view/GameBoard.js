@@ -2,6 +2,8 @@ import PIXIRenderer from './PIXIRenderer';
 import QuadrantButton from './QuadrantButton';
 import OnOffSwitch from './OnOffSwitch';
 import NotificationIcon from './NotificationIcon';
+import Scoreboard from './Scoreboard';
+import StrictButton from './StrictButton';
 
 export default class {
   constructor(width, height) {
@@ -40,6 +42,13 @@ export default class {
       this.addRenderable(this.notifications[msg].getRenderables.call(
         this.notifications[msg]));
     }
+
+    this.scoreboard = new Scoreboard(this.width, this.height);
+    this.addRenderable(this.scoreboard.getRenderables.call(this.scoreboard));
+
+    this.strictButton = new StrictButton(this.width, this.height);
+    this.addRenderable(this.strictButton.getRenderables.call(
+      this.strictButton));
   }
 
   turnOn() {
