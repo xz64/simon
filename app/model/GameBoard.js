@@ -7,7 +7,7 @@ export default class {
     this.strict = false;
     this.sequence = new Sequence();
     this.emitter = new EventEmitter();
-    this.score = 0;
+    this.setScore(0);
     this.inputBuffer = [];
     this.quadrantButtons = [];
 
@@ -18,20 +18,27 @@ export default class {
 
   reset() {
     this.sequence = new Sequence();
-    this.score = 0;
+    this.setScore(0);
     this.inputBuffer = [];
+    this.emitter.emit('reset');
   }
   
   toggleStrict(value) {
-    this.strict = value ? value : !this.strict;
+    this.strict = (value !== undefined) ? value : !this.strict;
   }
 
   pushInput(quadrant) {
     this.inputBuffer.push(quadrant);
   }
 
+  setScore(score) {
+    this.score = score;
+    this.emitter.emit('score', this.score);
+  }
+
+
   advanceLevel() {
-    this.score++;
+    this.setScore(this.score+1);
     this.sequence.addItem.call(this.sequence);
   }
 }

@@ -6,6 +6,8 @@ import GameBoardView from '../view/GameBoard';
 import QuadrantButtonView from '../view/QuadrantButton';
 import QuadrantButtonController from './QuadrantButtonController';
 import NotificationController from './NotificationController';
+import ScoreboardController from './ScoreboardController';
+import StrictModeController from './StrictModeController';
 
 export default class {
   constructor(width, height) {
@@ -29,6 +31,12 @@ export default class {
         this.gameBoardView.quadrantButtons[i]));
       this.quadrantButtonControllers[i].emitter.on('input', this.onInput, this);
     }
+
+    this.scoreboardController = new ScoreboardController(this.gameBoard.emitter,
+      this.gameBoardView.scoreboard);
+
+    this.strictModeController = new StrictModeController(
+      this.gameBoardView.strictButton, this.gameBoard);
 
     this.gameEngine = new GameEngine(this.updateCallback, this.renderCallback);
     this.gameEngine.startGame();
