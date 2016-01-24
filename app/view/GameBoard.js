@@ -2,6 +2,7 @@ import PIXIRenderer from './PIXIRenderer';
 import QuadrantButton from './QuadrantButton';
 import OnOffSwitch from './OnOffSwitch';
 import NotificationIcon from './NotificationIcon';
+import WinnerIcon from './WinnerIcon';
 import Scoreboard from './Scoreboard';
 import StrictButton from './StrictButton';
 
@@ -19,7 +20,7 @@ export default class {
         require('../../asset/check_mark.png')),
       failure: new NotificationIcon(this.width, this.height,
         require('../../asset/x_mark.png')),
-      win: new NotificationIcon(this.width, this.height,
+      win: new WinnerIcon(this.width, this.height,
         require('../../asset/win.png'))
     };
 
