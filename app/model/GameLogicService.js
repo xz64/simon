@@ -35,15 +35,15 @@ export default class {
   }
 
   notifySuccess(callback) {
-    this.changeState(new NotificationState(this, 'success', callback));
+    this.changeState(new NotificationState(this, 'success', callback, 1000));
   }
 
   notifyFailure(callback) {
-    this.changeState(new NotificationState(this, 'failure', callback));
+    this.changeState(new NotificationState(this, 'failure', callback, 1000));
   }
 
   notifyWin(callback) {
-    this.changeState(new NotificationState(this, 'win', callback));
+    this.changeState(new NotificationState(this, 'win', callback, 5000));
   }
 
   waitForInput() {
@@ -63,12 +63,16 @@ export default class {
       this.playCurrentPattern();
     });
   }
+
+  startOver() {
+    this.reset();
+    this.playCurrentPattern();
+  }
   
   advanceLevel() {
     this.gameBoard.advanceLevel.call(this.gameBoard);
     if(this.gameBoard.score === this.gameBoard.WIN_SCORE) {
-      this.reset();
-      this.notifyWin(this.playCurrentPattern.bind(this));
+      this.notifyWin(this.startOver.bind(this));
     }
     else {
       this.playCurrentPattern();

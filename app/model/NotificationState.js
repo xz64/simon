@@ -1,10 +1,10 @@
 import GameState from './GameState';
 
 export default class extends GameState {
-  constructor(gameLogicService, message, doneCallback) {
+  constructor(gameLogicService, message, doneCallback, duration) {
     super();
     this.timeElapsed = null;
-    this.onTime = 1000; // TODO: parameterize onTime/offTime config
+    this.duration = duration;
     this.doneCallback = doneCallback;
     this.emitter = gameLogicService.emitter;
     this.message = message;
@@ -21,7 +21,7 @@ export default class extends GameState {
   update(step) {
     this.timeElapsed += 1000/30; // TODO: remove magic number
 
-    if(this.timeElapsed > this.onTime) {
+    if(this.timeElapsed > this.duration) {
       this.emitter.emit('notification_off', this.message);
       this.doneCallback();
     }
