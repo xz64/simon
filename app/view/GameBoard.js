@@ -24,6 +24,10 @@ export default class {
         require('../../asset/win.png'))
     };
 
+    this.strictButton = new StrictButton(this.width, this.height);
+    this.addRenderable(this.strictButton.getRenderables.call(
+      this.strictButton));
+
     this.addRenderable(this.onOffSwitch.getRenderables.call(this.onOffSwitch));
     this.emitter = new EventEmitter();
     // TODO: put all renderables in an array and call addRenderable that way
@@ -46,10 +50,6 @@ export default class {
 
     this.scoreboard = new Scoreboard(this.width, this.height);
     this.addRenderable(this.scoreboard.getRenderables.call(this.scoreboard));
-
-    this.strictButton = new StrictButton(this.width, this.height);
-    this.addRenderable(this.strictButton.getRenderables.call(
-      this.strictButton));
   }
 
   turnOn() {
