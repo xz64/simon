@@ -31,7 +31,6 @@ export default class {
   }
 
   onMatch() {
-    this.gameBoard.advanceLevel.call(this.gameBoard);
     this.notifySuccess(this.advanceLevel.bind(this));
   }
 
@@ -71,7 +70,9 @@ export default class {
   }
   
   advanceLevel() {
+    this.gameBoard.advanceLevel.call(this.gameBoard);
     if(this.gameBoard.score === this.gameBoard.WIN_SCORE) {
+      this.gameBoard.setScore.call(this.gameBoard, -1);
       this.notifyWin(this.startOver.bind(this));
     }
     else {

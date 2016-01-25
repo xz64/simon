@@ -17,7 +17,7 @@ export default class {
   createGraphics() {
     let graphics = new PIXI.Graphics();
     graphics.beginFill(0x778899);
-    graphics.drawRoundedRect(0, 0, 100, 24, 5);
+    graphics.drawRoundedRect(0, 0, 110, 24, 5);
     graphics.endFill();
     return graphics;
   }
@@ -30,7 +30,7 @@ export default class {
   }
 
   createScore() {
-    let text = new PIXI.Text('Score: ', {font: 'bold 20px Arial',
+    let text = new PIXI.Text('Steps: ', {font: 'bold 20px Arial',
       align:'center'});
     text.position.x = this.width*0.05;
     text.position.y = this.height*0.05;
@@ -54,6 +54,6 @@ export default class {
   }
 
   setValue(val) {
-    this.scoreValue.text = val.toString();
+    this.scoreValue.text = (val+1).toString();
   }
 }
