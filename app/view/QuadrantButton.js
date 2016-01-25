@@ -1,5 +1,3 @@
-import Audio from './Audio';
-
 export default class QuadrantButton {
   constructor(width, height, quadrant) {
     this.width = width;
@@ -13,7 +11,7 @@ export default class QuadrantButton {
     this.sprite = this.createSprite();
     this.registerEventHandlers();
     this.dim();
-    this.audio = new Audio();
+    this.audio = new Audio(QuadrantButton.getAudio(this.quadrant));
     this.pressed = false;
     this.emitter = new EventEmitter();
   }
@@ -77,11 +75,13 @@ export default class QuadrantButton {
   }
 
   playAudio() {
-    this.audio.play.call(this.audio);
+    this.audio.currentTime = 0;
+    this.audio.play();
   }
 
   pauseAudio() {
-    this.audio.pause.call(this.audio);
+    this.audio.pause();
+    this.audio.currentTime = 0;
   }
   
   turnOn() {
@@ -258,5 +258,14 @@ export default class QuadrantButton {
         break;
     }
     return res;
+  }
+
+  static getAudio(quadrant) {
+    let audios = ['https://s3.amazonaws.com/freecodecamp/simonSound1.mp3',
+      'https://s3.amazonaws.com/freecodecamp/simonSound2.mp3', 
+      'https://s3.amazonaws.com/freecodecamp/simonSound3.mp3',
+      'https://s3.amazonaws.com/freecodecamp/simonSound4.mp3'];
+
+    return audios[quadrant-1];
   }
 }
