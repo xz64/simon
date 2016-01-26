@@ -17,7 +17,7 @@ export default class {
     this.lag += this.timeElapsed;
     
     while(this.lag >= this.MS_PER_UPDATE) {
-      this.updateCallback(this.lag / this.MS_PER_UPDATE);
+      this.updateCallback(this.MS_PER_UPDATE, this.lag / this.MS_PER_UPDATE);
       this.lag -= this.MS_PER_UPDATE;
     }
 

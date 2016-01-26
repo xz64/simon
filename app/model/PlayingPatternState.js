@@ -35,8 +35,8 @@ export default class extends GameState {
     this.quadrantButtons[index].turnOff.call(this.quadrantButtons[index]);
   }
 
-  update(step) {
-    this.timeElapsed += 1000/30; // TODO: remove magic number
+  update(step, residual) {
+    this.timeElapsed += step + residual; // TODO: remove magic number
 
     if(this.state === 'off') {
       if(this.timeElapsed >= this.offTime) {

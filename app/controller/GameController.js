@@ -62,8 +62,8 @@ export default class {
     this.gameBoardView.render.call(this.gameBoardView);
   }
 
-  update() {
-    this.gameLogicService.update.call(this.gameLogicService);
+  update(step, residual) {
+    this.gameLogicService.update.call(this.gameLogicService, step, residual);
   }
 
   onInput(quadrant) {

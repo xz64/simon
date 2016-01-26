@@ -17,7 +17,7 @@ export default class extends GameState {
   leaving() {
   }
 
-  update(step) {
+  update() {
   }
 
   render() {

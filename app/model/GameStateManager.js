@@ -11,8 +11,8 @@ export default class {
     this.currentState.entering.call(this.currentState);
   }
  
-  update(step) {
-    this.currentState.update.call(this.currentState, step);
+  update(step, residual) {
+    this.currentState.update.call(this.currentState, step, residual);
   }
 
   render() {
