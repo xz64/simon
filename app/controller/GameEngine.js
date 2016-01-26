@@ -1,3 +1,6 @@
+/*global performance*/
+/*global requestAnimationFrame*/
+
 export default class {
   constructor(updateCallback, renderCallback) {
     this.updateCallback = updateCallback;

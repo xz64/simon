@@ -1,3 +1,5 @@
+/*global EventEmitter*/
+
 import Sequence from './Sequence';
 import QuadrantButton from './QuadrantButton';
 

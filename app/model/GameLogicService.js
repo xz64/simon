@@ -1,3 +1,5 @@
+/*global EventEmitter*/
+
 import OffState from './OffState';
 import GameStateManager from './GameStateManager';
 import PlayingPatternState from './PlayingPatternState';

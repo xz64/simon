@@ -1,3 +1,5 @@
+/*global EventEmitter*/
+
 export default class {
   constructor(quadrantButton, quadrantButtonView) {
     this.quadrantButton = quadrantButton;
