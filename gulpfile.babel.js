@@ -1,15 +1,15 @@
-var gulp = require('gulp')
-var tape = require('gulp-tape')
-var eslint = require('gulp-eslint')
-var tapColorize = require('tap-colorize')
-var webpack = require('webpack')
-var webpackDevServer = require('webpack-dev-server')
-var webpackConfig = require('./webpack.config.js')
+var gulp = require('gulp');
+var tape = require('gulp-tape');
+var eslint = require('gulp-eslint');
+var tapColorize = require('tap-colorize');
+var webpack = require('webpack');
+var webpackDevServer = require('webpack-dev-server');
+var webpackConfig = require('./webpack.config.js');
 
 gulp.task('static', function(callback) {
   return gulp.src('./app/index.html')
-    .pipe(gulp.dest('./dist'))
-})
+    .pipe(gulp.dest('./dist'));
+});
 
 gulp.task('webpack', function(callback) {
   webpack(webpackConfig, function(err, stats) {
@@ -17,7 +17,7 @@ gulp.task('webpack', function(callback) {
       console.log('ERROR', err);
     }
     callback();
-  })
+  });
 })
 
 gulp.task('webpack-dev-server', function(callback) {
@@ -31,23 +31,23 @@ gulp.task('webpack-dev-server', function(callback) {
       console.log('ERROR', err);
     }
   })
-})
+});
 
 gulp.task('test', function() {
   return gulp.src('test/**/*.js')
     .pipe(tape({
       reporter: tapColorize()
-    }))
-})
+    }));
+});
 
 gulp.task('lint', function() {
-  gulp.src(['app/**/*.js', 'test/**/*.js'])
-    .pipe(eslint())
-    .pipe(eslint.format())
-})
+  gulp.src(['app/**/*.js'])
+    .pipe(eslint({ useEslintrc: true }))
+    .pipe(eslint.formatEach('compact', process.stderr));
+});
 
 gulp.task('watch', function() {
   gulp.watch('./app/index.html', ['static'])
-})
+});
 
-gulp.task('default', ['webpack-dev-server', 'static', 'watch'])
+gulp.task('default', ['webpack-dev-server', 'static', 'watch']);
