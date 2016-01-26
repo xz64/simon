@@ -25,7 +25,7 @@ export default class extends GameState {
     this.gameBoard.inputBuffer = [];
   }
 
-  update(step) {
+  update() {
     if(!this.expectedSequence.equalSoFar.call(this.expectedSequence,
       this.inputBuffer)) {
       this.gameLogicService.onMismatch.call(this.gameLogicService);

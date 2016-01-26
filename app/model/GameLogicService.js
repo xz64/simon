@@ -2,8 +2,6 @@ import OffState from './OffState';
 import GameStateManager from './GameStateManager';
 import PlayingPatternState from './PlayingPatternState';
 import InputState from './InputState';
-import Sequence from './Sequence';
-import QuadrantButton from './QuadrantButton';
 import NotificationState from './NotificationState';
 
 export default class {
