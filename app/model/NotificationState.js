@@ -18,8 +18,8 @@ export default class extends GameState {
   leaving() {
   }
 
-  update(step) {
-    this.timeElapsed += 1000/30; // TODO: remove magic number
+  update(step, residual) {
+    this.timeElapsed += step + residual;
 
     if(this.timeElapsed > this.duration) {
       this.emitter.emit('notification_off', this.message);

@@ -14,7 +14,7 @@ export default class extends Observable {
   leaving() {
   }
  
-  update(step) {
+  update() {
   }
 
   render() {

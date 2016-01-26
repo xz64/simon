@@ -11,8 +11,8 @@ export default class {
     this.emitter = new EventEmitter();
   }
 
-  update() {
-    this.gameStateManager.update.call(this.gameStateManager);
+  update(step, residual) {
+    this.gameStateManager.update.call(this.gameStateManager, step, residual);
   }
 
   begin() {
