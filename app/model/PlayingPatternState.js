@@ -1,4 +1,3 @@
-import OffState from './OffState';
 import GameState from './GameState';
 
 export default class extends GameState {
