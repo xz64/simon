@@ -7,7 +7,7 @@ export default class extends GameState {
     this.pattern = this.gameBoard.sequence.sequence.slice();
     this.quadrantButtons = this.gameBoard.quadrantButtons;
     this.timeElapsed = null;
-    this.onTime = 500; // TODO: parameterize onTime/offTime config
+    this.onTime = 500;
     this.offTime = 200;
     this.state = 'off';
     this.currentButton;
@@ -36,7 +36,7 @@ export default class extends GameState {
   }
 
   update(step, residual) {
-    this.timeElapsed += step + residual; // TODO: remove magic number
+    this.timeElapsed += step + residual;
 
     if(this.state === 'off') {
       if(this.timeElapsed >= this.offTime) {
