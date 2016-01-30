@@ -1,10 +1,10 @@
-var gulp = require('gulp');
-var tape = require('gulp-tape');
-var eslint = require('gulp-eslint');
-var tapColorize = require('tap-colorize');
-var webpack = require('webpack');
-var webpackDevServer = require('webpack-dev-server');
-var webpackConfig = require('./webpack.config.js');
+import gulp from 'gulp';
+import tape from 'gulp-tape';
+import eslint from 'gulp-eslint';
+import tapColorize from 'tap-colorize';
+import webpack from 'webpack';
+import webpackDevServer from 'webpack-dev-server';
+import webpackConfig from './webpack.config.babel.js';
 
 gulp.task('static', function(callback) {
   return gulp.src('./app/index.html')
