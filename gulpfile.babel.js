@@ -41,7 +41,7 @@ gulp.task('test', function() {
 });
 
 gulp.task('lint', function() {
-  gulp.src(['app/**/*.js', 'test/**/*.js'])
+  return gulp.src(['app/**/*.js', 'test/**/*.js'])
     .pipe(eslint({ useEslintrc: true }))
     .pipe(eslint.formatEach('compact', process.stderr));
 });
