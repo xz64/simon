@@ -1,5 +1,6 @@
 /*global $*/
 /*global document*/
+/*global window*/
 
 import GameController from './controller/GameController';
 

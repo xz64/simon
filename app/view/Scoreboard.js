@@ -1,3 +1,6 @@
+/*global PIXI*/
+/*global EventEmitter*/
+
 export default class {
   constructor(width, height) {
     this.width = width;

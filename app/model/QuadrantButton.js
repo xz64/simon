@@ -1,3 +1,5 @@
+/*global EventEmitter*/
+
 export default class {
   constructor(quadrant) {
     this.quadrant = quadrant;

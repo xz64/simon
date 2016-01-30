@@ -1,3 +1,6 @@
+/*global require*/
+/*global EventEmitter*/
+
 import PIXIRenderer from './PIXIRenderer';
 import QuadrantButton from './QuadrantButton';
 import OnOffSwitch from './OnOffSwitch';

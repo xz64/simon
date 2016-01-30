@@ -4,7 +4,7 @@ export default class {
     this.height = height;
   }
   
-  addItem(item) {
+  addItem() {
   }
 
   render() {

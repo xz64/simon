@@ -1,3 +1,6 @@
+/*global PIXI*/
+/*global document*/
+
 import GameRenderer from './GameRenderer';
 
 export default class extends GameRenderer {

@@ -1,3 +1,7 @@
+/*global PIXI*/
+/*global Audio*/
+/*global EventEmitter*/
+
 export default class QuadrantButton {
   constructor(width, height, quadrant) {
     this.width = width;
@@ -244,18 +248,18 @@ export default class QuadrantButton {
   static getColor(quadrant) {
     let res = 0xFFFFFF;
     switch(quadrant) {
-      case 1:
-        res = 0xFF0000;
-        break;
-      case 2:
-        res = 0x00CC00;
-        break;
-      case 3:
-        res = 0xFFFF00;
-        break;
-      case 4:
-        res = 0x06AEFF;
-        break;
+    case 1:
+      res = 0xFF0000;
+      break;
+    case 2:
+      res = 0x00CC00;
+      break;
+    case 3:
+      res = 0xFFFF00;
+      break;
+    case 4:
+      res = 0x06AEFF;
+      break;
     }
     return res;
   }

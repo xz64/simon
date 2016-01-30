@@ -1,3 +1,6 @@
+/*global EventEmitter*/
+/*global PIXI*/
+
 export default class {
   constructor(width, height) {
     this.width = width;
@@ -53,14 +56,14 @@ export default class {
   }
 
   createOnLabel() {
-    let text = new PIXI.Text("On", {font: "16px Arial", fill: "cyan"});
+    let text = new PIXI.Text('On', {font: '16px Arial', fill: 'cyan'});
     text.position.x = -0.02*this.width;
     text.position.y = 0.030*this.height;
     return text;
   }
 
   createOffLabel() {
-    let text = new PIXI.Text("Off", {font: "16px Arial", fill: "cyan"});
+    let text = new PIXI.Text('Off', {font: '16px Arial', fill: 'cyan'});
     text.position.x = 0.035*this.width;
     text.position.y = 0.030*this.height;
     return text;

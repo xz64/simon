@@ -1,3 +1,6 @@
+/*global EventEmitter*/
+/*global PIXI*/
+
 import UIElement from './UIElement';
 
 export default class extends UIElement {
@@ -38,7 +41,7 @@ export default class extends UIElement {
   }
 
   createLabel() {
-    let text = new PIXI.Text("Strict Mode", {font: "16px Arial", fill: "cyan"});
+    let text = new PIXI.Text('Strict Mode', {font: '16px Arial', fill: 'cyan'});
     text.position.x = -this.buttonRadius;
     text.position.y = 2*this.buttonRadius;
     return text;
