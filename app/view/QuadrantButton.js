@@ -5,7 +5,7 @@ export default class QuadrantButton {
     this.boardSize = ( (width  < height) ? width : height ) - 30;
     this.smallRadius = this.boardSize / 5;
     this.bigRadius = this.boardSize / 2.5;
-    this.buttonSpacing = 30;
+    this.buttonSpacing = this.boardSize / 20;
     this.quadrant = quadrant;
     this.graphics = this.createGraphics();
     this.sprite = this.createSprite();
