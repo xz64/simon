@@ -4,5 +4,5 @@
 import GameController from './controller/GameController';
 
 $(document).ready(function() {
-  new GameController(640, 480);
+  new GameController($(window).width(), $(window).height());
 });
