@@ -18,7 +18,7 @@ gulp.task('webpack', function(callback) {
     }
     callback();
   });
-})
+});
 
 gulp.task('webpack-dev-server', function(callback) {
   new webpackDevServer(webpack(webpackConfig), {
