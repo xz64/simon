@@ -1,7 +1,10 @@
-export default class {
+import UIElement from './UIElement';
+
+export default class extends UIElement {
   constructor(width, height) {
-    this.width = width;
-    this.height = height;
+    super(width, height);
+    this.buttonRadius = 20;
+    this.indicatorRadius = 5;
     this.value = false;
     this.emitter = new EventEmitter();
     this.graphicsContainer = new PIXI.Container();
@@ -11,15 +14,17 @@ export default class {
     this.graphicsContainer.addChild(this.sprite);
     this.graphicsContainer.addChild(this.indicatorSprite);
     this.graphicsContainer.addChild(this.createLabel());
+    this.graphicsContainer.position.x = this.marginLeft + 0.35*this.boardSize;
+    this.graphicsContainer.position.y = this.marginTop + 0.45*this.boardSize;
   }
 
   createGraphics() {
     let graphics = new PIXI.Graphics();
-    graphics.beginFill(0x222222);
-    graphics.drawCircle(0, 0, 20);
+    graphics.beginFill(0x333333);
+    graphics.drawCircle(0, 0, this.buttonRadius);
     graphics.endFill();
     graphics.beginFill(0xFFFF00);
-    graphics.drawCircle(0, 0, 15);
+    graphics.drawCircle(0, 0, this.buttonRadius - 5);
     graphics.endFill();
     return graphics;
   }
@@ -27,30 +32,28 @@ export default class {
   createIndicatorGraphics() {
     let graphics = new PIXI.Graphics();
     graphics.beginFill(0xFF0000);
-    graphics.drawCircle(0, 0, 5);
+    graphics.drawCircle(0, 0, this.indicatorRadius);
     graphics.endFill();
     return graphics;
   }
 
   createLabel() {
     let text = new PIXI.Text("Strict Mode", {font: "16px Arial", fill: "cyan"});
-    text.position.x = this.width*0.35 - 20;
-    text.position.y = this.height*0.45 + 40;
+    text.position.x = -this.buttonRadius;
+    text.position.y = 2*this.buttonRadius;
     return text;
   }
 
   createIndicatorSprite(graphics) {
     let sprite = new PIXI.Sprite(graphics.generateTexture());
-    sprite.position.x = this.width*0.35 + 15;
-    sprite.position.y = this.height*0.45 - 15;
+    sprite.position.x = this.buttonRadius / 2 + this.indicatorRadius;
+    sprite.position.y = -this.buttonRadius / 2 - this.indicatorRadius;
     sprite.tint = 0x777777;
     return sprite;
   }
 
   createSprite(graphics) {
     let sprite = new PIXI.Sprite(graphics.generateTexture());
-    sprite.position.x = this.width*0.35;
-    sprite.position.y = this.height*0.45;
     sprite.buttonMode = true;
     sprite.interactive = true;
     sprite.click = this.onClick.bind(this);
