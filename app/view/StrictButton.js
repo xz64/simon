@@ -18,7 +18,7 @@ export default class extends UIElement {
     this.graphicsContainer.addChild(this.indicatorSprite);
     this.graphicsContainer.addChild(this.createLabel());
     this.graphicsContainer.position.x = this.marginLeft + 0.35*this.boardSize;
-    this.graphicsContainer.position.y = this.marginTop + 0.45*this.boardSize;
+    this.graphicsContainer.position.y = this.marginTop + 0.5*this.boardSize;
   }
 
   createGraphics() {
