@@ -1,16 +1,18 @@
 /*global EventEmitter*/
 /*global PIXI*/
 
-export default class {
+import UIElement from './UIElement';
+
+export default class extends UIElement {
   constructor(width, height) {
-    this.width = width;
-    this.height = height;
+    super(width, height);
     this.emitter = new EventEmitter();
-    this.boardSize = ( (width  < height) ? width : height ) - 30;
+    this.buttonWidth = 40;
+    this.buttonHeight = 15;
     this.button = this.createSprite(this.createButton());
     this.graphicsContainer = new PIXI.Container();
-    this.graphicsContainer.position.x = this.width*.5;
-    this.graphicsContainer.position.y = this.height*.5;
+    this.graphicsContainer.position.x = this.marginLeft + 0.6*this.boardSize;
+    this.graphicsContainer.position.y = this.marginTop + 0.5*this.boardSize;
     this.graphicsContainer.addChild(this.createBackground());
     this.graphicsContainer.addChild(this.button);
     this.graphicsContainer.addChild(this.createOnLabel());
@@ -20,7 +22,7 @@ export default class {
   createBackground() {
     let graphics = new PIXI.Graphics();
     graphics.beginFill(0xEEEEEE);
-    graphics.drawRoundedRect(0, 0, 0.06*this.width, 0.03*this.height, 5);
+    graphics.drawRoundedRect(0, 0, this.buttonWidth, this.buttonHeight, 5);
     graphics.endFill();
     return graphics;
   }
@@ -28,25 +30,26 @@ export default class {
   createButton() {
     let graphics = new PIXI.Graphics();
     graphics.beginFill(0x4169e1);
-    graphics.drawRoundedRect(0, 0, 0.03*this.width, 0.03*this.height, 5);
+    graphics.drawRoundedRect(0, 0, (this.buttonWidth / 2) + 5,
+      this.buttonHeight, 5);
     graphics.endFill();
     return graphics;
   }
 
   createSprite(graphics) {
     let sprite = new PIXI.Sprite(graphics.generateTexture());
-    sprite.hitArea = new PIXI.RoundedRectangle(0, 0, 0.03*this.width,
-      0.03*this.height, 5);
+    sprite.hitArea = new PIXI.RoundedRectangle(0, 0, this.buttonHeight,
+      this.buttonHeight, 5);
     sprite.interactive = true;
     sprite.buttonMode = true;
     sprite.click = this.onClick.bind(this);
-    sprite.position.x = 0.03*this.width;
+    sprite.position.x = this.buttonWidth / 2;
     return sprite;
   }
 
   onClick() {
     if(this.button.position.x === 0) {
-      this.button.position.x = 0.03*this.width;
+      this.button.position.x = this.buttonWidth / 2;
       this.emitter.emit('off');
     }
     else {
@@ -55,17 +58,21 @@ export default class {
     }
   }
 
+  createText(string) {
+    return new PIXI.Text(string, {font: '16px Arial', fill: 'cyan'});
+  }
+
   createOnLabel() {
-    let text = new PIXI.Text('On', {font: '16px Arial', fill: 'cyan'});
-    text.position.x = -0.02*this.width;
-    text.position.y = 0.030*this.height;
+    let text = this.createText('On');
+    text.position.x = -10;
+    text.position.y = this.buttonHeight;
     return text;
   }
 
   createOffLabel() {
-    let text = new PIXI.Text('Off', {font: '16px Arial', fill: 'cyan'});
-    text.position.x = 0.035*this.width;
-    text.position.y = 0.030*this.height;
+    let text = this.createText('Off');
+    text.position.x = this.buttonWidth * 0.6;
+    text.position.y = this.buttonHeight;
     return text;
   }
 
