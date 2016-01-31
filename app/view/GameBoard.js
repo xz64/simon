@@ -26,18 +26,31 @@ export default class {
       win: new WinnerIcon(this.width, this.height,
         require('../../asset/win.png'))
     };
-
     this.strictButton = new StrictButton(this.width, this.height);
-    this.addRenderable(this.strictButton.getRenderables.call(
-      this.strictButton));
-
-    this.addRenderable(this.onOffSwitch.getRenderables.call(this.onOffSwitch));
     this.emitter = new EventEmitter();
-    // TODO: put all renderables in an array and call addRenderable that way
-
     for(let i = 0; i < 4; i++) {
       this.quadrantButtons.push(new QuadrantButton(this.width, this.height,
         i+1));
+    }
+    this.scoreboard = new Scoreboard(this.width, this.height);
+
+    this.addAllRenderables();
+  }
+
+  turnOn() {
+    this.emitter.emit('on');
+  }
+
+  turnOff() {
+    this.emitter.emit('off');
+  }
+
+  addAllRenderables() {
+    this.addRenderable(this.strictButton.getRenderables.call(
+      this.strictButton));
+    this.addRenderable(this.onOffSwitch.getRenderables.call(this.onOffSwitch));
+
+    for(let i = 0; i < 4; i++) {
       this.addRenderable(this.quadrantButtons[i].getRenderables.call(
         this.quadrantButtons[i]));
     }
@@ -51,16 +64,7 @@ export default class {
         this.notifications[msg]));
     }
 
-    this.scoreboard = new Scoreboard(this.width, this.height);
     this.addRenderable(this.scoreboard.getRenderables.call(this.scoreboard));
-  }
-
-  turnOn() {
-    this.emitter.emit('on');
-  }
-
-  turnOff() {
-    this.emitter.emit('off');
   }
 
   addRenderable(item) {
