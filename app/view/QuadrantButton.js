@@ -2,11 +2,11 @@
 /*global Audio*/
 /*global EventEmitter*/
 
-export default class QuadrantButton {
+import UIElement from './UIElement';
+
+export default class QuadrantButton extends UIElement {
   constructor(width, height, quadrant) {
-    this.width = width;
-    this.height = height;
-    this.boardSize = ( (width  < height) ? width : height ) - 30;
+    super(width, height);
     this.smallRadius = this.boardSize / 5;
     this.bigRadius = this.boardSize / 2.5;
     this.buttonSpacing = this.boardSize / 20;
