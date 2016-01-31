@@ -83,11 +83,6 @@ export default class QuadrantButton extends UIElement {
     this.audio.play();
   }
 
-  pauseAudio() {
-    this.audio.pause();
-    this.audio.currentTime = 0;
-  }
-  
   turnOn() {
     this.light();
     this.playAudio();
@@ -95,7 +90,6 @@ export default class QuadrantButton extends UIElement {
 
   turnOff() {
     this.dim();
-    this.pauseAudio();
   }
 
   onMouseDown() {
@@ -107,7 +101,6 @@ export default class QuadrantButton extends UIElement {
   onMouseUp() {
     if(this.pressed) {
       this.dim();
-      this.pauseAudio();
       this.pressed = false;
       this.emitter.emit('pressed');
     }
