@@ -9,7 +9,6 @@ export default class extends UIElement {
     this.emitter = new EventEmitter();
     this.backgroundWidth = 110;
     this.backgroundHeight = 24;
-    this.graphicsContainer = new PIXI.Container();
     this.sprite = this.createSprite(this.createGraphics());
     this.label= this.createLabel();
     this.score= this.createScore();
@@ -56,10 +55,6 @@ export default class extends UIElement {
 
   createLabel() {
     return new PIXI.Graphics();
-  }
-
-  getRenderables() {
-    return this.graphicsContainer;
   }
 
   setValue(val) {

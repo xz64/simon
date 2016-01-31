@@ -18,10 +18,7 @@ export default class QuadrantButton extends UIElement {
     this.audio = new Audio(QuadrantButton.getAudio(this.quadrant));
     this.pressed = false;
     this.emitter = new EventEmitter();
-  }
-
-  getRenderables() {
-    return this.sprite;
+    this.graphicsContainer.addChild(this.sprite);
   }
 
   createGraphics() {

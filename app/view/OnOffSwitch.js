@@ -10,7 +10,6 @@ export default class extends UIElement {
     this.buttonWidth = 40;
     this.buttonHeight = 15;
     this.button = this.createSprite(this.createButton());
-    this.graphicsContainer = new PIXI.Container();
     this.graphicsContainer.position.x = this.marginLeft + 0.6*this.boardSize;
     this.graphicsContainer.position.y = this.marginTop + 0.5*this.boardSize;
     this.graphicsContainer.addChild(this.createBackground());
@@ -74,9 +73,5 @@ export default class extends UIElement {
     text.position.x = this.buttonWidth * 0.6;
     text.position.y = this.buttonHeight;
     return text;
-  }
-
-  getRenderables() {
-    return this.graphicsContainer;
   }
 }

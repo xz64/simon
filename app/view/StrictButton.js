@@ -10,7 +10,6 @@ export default class extends UIElement {
     this.indicatorRadius = 5;
     this.value = false;
     this.emitter = new EventEmitter();
-    this.graphicsContainer = new PIXI.Container();
     this.sprite = this.createSprite(this.createGraphics());
     this.indicatorSprite = this.createIndicatorSprite(
       this.createIndicatorGraphics());
@@ -72,10 +71,6 @@ export default class extends UIElement {
       this.turnOn();
       this.emitter.emit('on');
     }
-  }
-
-  getRenderables() {
-    return this.graphicsContainer;
   }
 
   turnOn() {
