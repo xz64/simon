@@ -38,7 +38,6 @@ export default class {
     this.emitter.emit('score', this.score);
   }
 
-
   advanceLevel() {
     this.setScore(this.score+1);
     this.sequence.addItem.call(this.sequence);

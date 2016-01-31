@@ -14,8 +14,4 @@ export default class {
   update(step, residual) {
     this.currentState.update.call(this.currentState, step, residual);
   }
-
-  render() {
-    this.currentState.render.call(this.currentState);
-  }
 }

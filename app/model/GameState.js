@@ -1,11 +1,5 @@
-import Observable from './Observable';
-
-export default class extends Observable {
+export default class {
   constructor() {
-    super();
-  }
-
-  changeState() {
   }
 
   entering() {
@@ -15,8 +9,5 @@ export default class extends Observable {
   }
  
   update() {
-  }
-
-  render() {
   }
 }

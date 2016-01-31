@@ -61,7 +61,4 @@ export default class extends GameState {
       }
     }
   }
-
-  render() {
-  }
 }

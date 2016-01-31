@@ -26,7 +26,4 @@ export default class extends GameState {
       this.doneCallback();
     }
   }
-
-  render() {
-  }
 }

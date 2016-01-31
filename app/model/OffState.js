@@ -13,14 +13,4 @@ export default class extends GameState {
       this.quadrantButtons[i].lock.call(this.quadrantButtons[i]);
     }
   }
-
-  leaving() {
-  }
-
-  update() {
-  }
-
-  render() {
-  }
-
 }
