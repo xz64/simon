@@ -6,7 +6,7 @@ import GameRenderer from './GameRenderer';
 export default class extends GameRenderer {
   constructor(width, height) {
     super(width, height);
-    this.renderer = PIXI.autoDetectRenderer(width, height,
+    this.renderer = PIXI.autoDetectRenderer(this.width, this.height,
       {antialiasing: true});
     this.renderer.autoResize = true;
     this.renderer.view.style.position = 'absolute';
