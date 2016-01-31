@@ -1,6 +1,5 @@
 /*global EventEmitter*/
 /*global PIXI*/
-/*global Image*/
 
 export default class {
   constructor(width, height, imageURL) {
@@ -9,8 +8,6 @@ export default class {
     this.emitter = new EventEmitter();
     this.graphicsContainer = new PIXI.Container();
     this.imageURL = imageURL;
-    this.img = new Image();
-    this.img.src = this.imageURL;
     this.sprite = this.createSprite(this.imageURL);
     this.graphicsContainer.addChild(this.sprite);
     this.hide();
