@@ -16,13 +16,13 @@ export default class extends GameState {
   }
 
   leaving() {
+    this.emitter.emit('notification_off', this.message);
   }
 
   update(step, residual) {
     this.timeElapsed += step + residual;
 
     if(this.timeElapsed > this.duration) {
-      this.emitter.emit('notification_off', this.message);
       this.doneCallback();
     }
   }
