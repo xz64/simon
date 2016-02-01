@@ -1,5 +1,5 @@
-/*global require*/
 /*global EventEmitter*/
+/*global Promise*/
 
 import PIXIRenderer from './PIXIRenderer';
 import QuadrantButton from './QuadrantButton';
@@ -8,6 +8,7 @@ import NotificationIcon from './NotificationIcon';
 import WinnerIcon from './WinnerIcon';
 import Scoreboard from './Scoreboard';
 import StrictButton from './StrictButton';
+import AssetManager from './AssetManager';
 
 export default class {
   constructor(width, height) {
@@ -18,23 +19,31 @@ export default class {
     this.onOffSwitch = new OnOffSwitch(this.width, this.height);
     this.onOffSwitch.emitter.on('on', this.turnOn, this);
     this.onOffSwitch.emitter.on('off', this.turnOff, this);
-    this.notifications = {
-      success: new NotificationIcon(this.width, this.height,
-        require('../../asset/check_mark.png')),
-      failure: new NotificationIcon(this.width, this.height,
-        require('../../asset/x_mark.png')),
-      win: new WinnerIcon(this.width, this.height,
-        require('../../asset/win.png'))
-    };
     this.strictButton = new StrictButton(this.width, this.height);
     this.emitter = new EventEmitter();
+    this.assetManager = new AssetManager();
     for(let i = 0; i < 4; i++) {
       this.quadrantButtons.push(new QuadrantButton(this.width, this.height,
         i+1));
     }
     this.scoreboard = new Scoreboard(this.width, this.height);
 
+    this.loadAssets = this.assetManager.ready.call(this.assetManager);
+    this.ready = this.loadAssets.then(this.onAssetsLoaded.bind(this));
+  }
+
+  onAssetsLoaded(resources) {
+    this.resources = resources;
+    this.notifications = {
+      success: new NotificationIcon(this.width, this.height,
+        this.resources['check_mark'].url),
+      failure: new NotificationIcon(this.width, this.height,
+        this.resources['x_mark'].url),
+      win: new WinnerIcon(this.width, this.height,
+        this.resources['win'].url)
+    };
     this.addAllRenderables();
+    return Promise.resolve();
   }
 
   turnOn() {
@@ -55,16 +64,15 @@ export default class {
         this.quadrantButtons[i]));
     }
 
+    this.addRenderable(this.scoreboard.getRenderables.call(this.scoreboard));
+
     for(var msg in this.notifications) {
       if(!this.notifications.hasOwnProperty(msg)) {
         continue;
       }
-
       this.addRenderable(this.notifications[msg].getRenderables.call(
         this.notifications[msg]));
     }
-
-    this.addRenderable(this.scoreboard.getRenderables.call(this.scoreboard));
   }
 
   addRenderable(item) {

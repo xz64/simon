@@ -11,14 +11,22 @@ export default class {
   constructor(width, height) {
     this.width = width;
     this.height = height;
-    this.gameBoard = new GameBoard();
-    this.gameBoardView = new GameBoardView(this.width, this.height);
-    this.gameLogicService = new GameLogicService(this.gameBoard);
-    this.gameBoardView.emitter.on('on', this.turnOn, this);
-    this.gameBoardView.emitter.on('off', this.turnOff, this);
     this.updateCallback = this.update.bind(this);
     this.renderCallback = this.render.bind(this);
+    this.gameEngine = new GameEngine(this.updateCallback, this.renderCallback);
+    this.gameBoard = new GameBoard();
+    this.gameLogicService = new GameLogicService(this.gameBoard);
+    this.gameBoardView = new GameBoardView(this.width, this.height);
+    this.gameBoardView.emitter.on('on', this.turnOn, this);
+    this.gameBoardView.emitter.on('off', this.turnOff, this);
 
+    this.gameBoardView.ready.then(() => {
+      this.setupControllers();
+      this.gameEngine.startGame();
+    });
+  }
+
+  setupControllers() {
     this.quadrantButtonControllers = [];
     this.notificationController = new NotificationController(
       this.gameLogicService.emitter, this.gameBoardView.notifications);
@@ -35,9 +43,6 @@ export default class {
 
     this.strictModeController = new StrictModeController(
       this.gameBoardView.strictButton, this.gameBoard);
-
-    this.gameEngine = new GameEngine(this.updateCallback, this.renderCallback);
-    this.gameEngine.startGame();
   }
 
   addRenderable(item) {

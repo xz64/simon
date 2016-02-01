@@ -15,9 +15,8 @@ export default class {
 
   createSprite(filename) {
     let sprite = new PIXI.Sprite.fromImage(filename);
-    /* TODO use asset preloader to avoid magic numbers */
-    sprite.position.x = this.width/2 - 64;
-    sprite.position.y = this.height/2 - 64;
+    sprite.position.x = this.width/2 - sprite.width/2;
+    sprite.position.y = this.height/2 - sprite.height/2;
     return sprite;
   }
 
