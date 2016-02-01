@@ -22,6 +22,10 @@ export default class {
     this.loader.add('check_mark', require('../../asset/check_mark.png'));
     this.loader.add('x_mark', require('../../asset/x_mark.png'));
     this.loader.add('win', require('../../asset/win.png'));
+    this.loader.add('sound1', require('../../asset/simonSound1.mp3'));
+    this.loader.add('sound2', require('../../asset/simonSound2.mp3'));
+    this.loader.add('sound3', require('../../asset/simonSound3.mp3'));
+    this.loader.add('sound4', require('../../asset/simonSound4.mp3'));
     this.loader.load();
     this.loader.once('complete', (loader, resources) => {
       resolve(resources);

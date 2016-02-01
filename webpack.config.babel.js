@@ -35,6 +35,12 @@ class WebpackConfig {
           exclude: /node_modules/,
           loader: 'url-loader',
           query: { mimetype: 'image/png' }
+        },
+        {
+          test: /.mp3$/,
+          exclude: /node_modules/,
+          loader: 'url-loader',
+          query: { mimetype: 'audio/mp3' }
         }
       ]
     };

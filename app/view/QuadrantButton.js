@@ -5,7 +5,7 @@
 import UIElement from './UIElement';
 
 export default class QuadrantButton extends UIElement {
-  constructor(width, height, quadrant) {
+  constructor(width, height, quadrant, audio) {
     super(width, height);
     this.smallRadius = this.boardSize / 5;
     this.bigRadius = this.boardSize / 2.5;
@@ -15,7 +15,7 @@ export default class QuadrantButton extends UIElement {
     this.sprite = this.createSprite();
     this.registerEventHandlers();
     this.dim();
-    this.audio = new Audio(QuadrantButton.getAudio(this.quadrant));
+    this.audio = new Audio(audio);
     this.pressed = false;
     this.emitter = new EventEmitter();
     this.graphicsContainer.addChild(this.sprite);
@@ -252,14 +252,5 @@ export default class QuadrantButton extends UIElement {
       break;
     }
     return res;
-  }
-
-  static getAudio(quadrant) {
-    let audios = ['https://s3.amazonaws.com/freecodecamp/simonSound1.mp3',
-      'https://s3.amazonaws.com/freecodecamp/simonSound2.mp3', 
-      'https://s3.amazonaws.com/freecodecamp/simonSound3.mp3',
-      'https://s3.amazonaws.com/freecodecamp/simonSound4.mp3'];
-
-    return audios[quadrant-1];
   }
 }

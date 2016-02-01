@@ -22,10 +22,6 @@ export default class {
     this.strictButton = new StrictButton(this.width, this.height);
     this.emitter = new EventEmitter();
     this.assetManager = new AssetManager();
-    for(let i = 0; i < 4; i++) {
-      this.quadrantButtons.push(new QuadrantButton(this.width, this.height,
-        i+1));
-    }
     this.scoreboard = new Scoreboard(this.width, this.height);
 
     this.loadAssets = this.assetManager.ready.call(this.assetManager);
@@ -45,6 +41,12 @@ export default class {
       win: new WinnerIcon(this.width, this.height,
         this.getAsset('win'))
     };
+
+    for(let i = 0; i < 4; i++) {
+      this.quadrantButtons.push(new QuadrantButton(this.width, this.height,
+        i+1, this.getAsset('sound' + (i+1))));
+    }
+
     this.addAllRenderables();
     return Promise.resolve();
   }
