@@ -36,7 +36,7 @@ export default class {
     return this.assetManager.getURL.call(this.assetManager, item);
   }
 
-  onAssetsLoaded(resources) {
+  onAssetsLoaded() {
     this.notifications = {
       success: new NotificationIcon(this.width, this.height,
         this.getAsset('check_mark')),
