@@ -32,15 +32,18 @@ export default class {
     this.ready = this.loadAssets.then(this.onAssetsLoaded.bind(this));
   }
 
+  getAsset(item) {
+    return this.assetManager.getURL.call(this.assetManager, item);
+  }
+
   onAssetsLoaded(resources) {
-    this.resources = resources;
     this.notifications = {
       success: new NotificationIcon(this.width, this.height,
-        this.resources['check_mark'].url),
+        this.getAsset('check_mark')),
       failure: new NotificationIcon(this.width, this.height,
-        this.resources['x_mark'].url),
+        this.getAsset('x_mark')),
       win: new WinnerIcon(this.width, this.height,
-        this.resources['win'].url)
+        this.getAsset('win'))
     };
     this.addAllRenderables();
     return Promise.resolve();

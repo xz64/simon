@@ -1,5 +1,6 @@
 /*global PIXI*/
 /*global require*/
+/*global Promise*///
 
 export default class {
   constructor() {
@@ -7,7 +8,14 @@ export default class {
   }
 
   ready() {
-    return new Promise(this.loadAssets.bind(this));
+    return new Promise(this.loadAssets.bind(this)).then((resources) => {
+      this.resources = resources;
+      Promise.resolve(resources);
+    });
+  }
+
+  getURL(item) {
+    return this.resources[item].url;
   }
 
   loadAssets(resolve) {
