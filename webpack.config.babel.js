@@ -1,6 +1,8 @@
 import path from 'path';
 import webpack from 'webpack';
 
+var development = process.env.NODE_ENV !== 'production';
+
 class WebpackConfig {
   constructor(outputDir, minify, sourcemaps) {
     this.entry = {
@@ -71,4 +73,4 @@ class WebpackConfig {
   }
 }
 
-export default new WebpackConfig('dist', false, true);
+export default new WebpackConfig('dist', !development, development);
