@@ -10,3 +10,9 @@ Technologies used:
 * PIXI.js
 * jQuery
 * ESLint
+
+#Build instructions
+`npm install`
+`npm run gulp static webpack`
+
+For production builds, set `NODE_ENV=production` as an environment variable.
