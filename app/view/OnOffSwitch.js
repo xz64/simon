@@ -41,7 +41,7 @@ export default class extends UIElement {
       this.buttonHeight, 5);
     sprite.interactive = true;
     sprite.buttonMode = true;
-    sprite.click = this.onClick.bind(this);
+    sprite.click = sprite.tap = this.onClick.bind(this);
     sprite.position.x = this.buttonWidth / 2;
     return sprite;
   }
