@@ -54,8 +54,9 @@ export default class QuadrantButton extends UIElement {
   registerEventHandlers() {
     this.sprite.interactive = false;
     this.sprite.buttonMode = true;
-    this.sprite.mousedown = this.onMouseDown.bind(this);
-    this.sprite.mouseup = this.onMouseUp.bind(this);
+    this.sprite.mousedown = this.sprite.touchstart =
+      this.onMouseDown.bind(this);
+    this.sprite.mouseup = this.sprite.touchend = this.onMouseUp.bind(this);
     this.sprite.mouseout = this.onMouseUp.bind(this);
   }
 

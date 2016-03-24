@@ -58,7 +58,7 @@ export default class extends UIElement {
     let sprite = new PIXI.Sprite(graphics.generateTexture());
     sprite.buttonMode = true;
     sprite.interactive = true;
-    sprite.click = this.onClick.bind(this);
+    sprite.click = sprite.tap = this.onClick.bind(this);
     return sprite;
   }
 
