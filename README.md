@@ -13,6 +13,7 @@ Technologies used:
 
 #Build instructions
 `npm install`
+
 `npm run gulp static webpack`
 
 For production builds, set `NODE_ENV=production` as an environment variable.
